@@ -3,6 +3,7 @@ var router = express.Router()
 var UserController = require('../../controllers/users.controller');
 var ContactoController = require('../../controllers/contacto.controller');
 var EncuestaController = require('../../controllers/encuesta.controller');
+var TarjetaController = require('../../controllers/tarjeta.controller');
 var Authorization = require('../../auth/authorization');
 
 // Endpoints usuarios
@@ -14,6 +15,9 @@ router.post('/usr', UserController.removeUser)
 
 // Endpoints contacto
 router.post('/contacto', ContactoController.createContacto)
+
+//Endpoint tarjetas
+router.post('/tarjeta', TarjetaController.agregarTarjeta)
 
 // Endpoints encuesta
 router.post('/encuesta', EncuestaController.createEncuesta)
