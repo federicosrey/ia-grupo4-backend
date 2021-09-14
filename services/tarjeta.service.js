@@ -5,24 +5,24 @@ var jwt = require('jsonwebtoken');
 
 _this = this
 
-// Recupero usuarios
-exports.getUsers = async function (query, page, limit) {
+// Recupero tarjetas
+exports.getTarjetas = async function (query, page, limit) {
 
     var options = {
         page,
         limit
     }
     try {
-        var Users = await User.paginate(query, options)
-        return Users;
+        var Tarjetas = await tarjeta.paginate(query, options)
+        return Tarjetas;
 
     } catch (e) {
         console.log("error servicio", e)
-        throw Error('Error en el paginado de usuarios');
+        throw Error('Error en el paginado de tarjetas');
     }
 }
 
-// Creo usuarios
+// Creo tarjeta
 exports.agregarTarjeta = async function (Tarjeta) {    
 
     var nuevaTarjeta = new tarjeta({
