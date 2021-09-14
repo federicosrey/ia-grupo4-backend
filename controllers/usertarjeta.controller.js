@@ -1,31 +1,16 @@
 var UserService = require('../services/user.service');
-var tarjetaService = require('../services/tarjeta.service');
+var usertarjetaService = require('../services/usertarjeta.service');
 
 _this = this;
 
 // Listo tarjetas
-exports.getTarjetas = async function (req, res, next) {
+exports.getUserTarjetas = async function (req, res, next) {
 
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 1000;
     try {
-        var Tarjetas = await tarjetaService.getTarjetas({}, page, limit)
-        return res.status(200).json({ status: 200, data: Tarjetas, message: "Tarjetas recuperadas exitosamente" });
-    } catch (e) {
-
-        return res.status(400).json({ status: 400, message: e.message });
-    }
-}
-
-exports.getTarjeta = async function (req, res, next) {
-
-    var page = req.query.page ? req.query.page : 1
-    var limit = req.query.limit ? req.query.limit : 1000;
-    var id = req.query.descripcion;
-    console.log("fe",id);
-    try {
-        var Tarjeta = await tarjetaService.getTarjeta(id, page, limit)
-        return res.status(200).json({ status: 200, data: Tarjeta, message: "Tarjeta recuperada exitosamente" });
+        var UserTarjetas = await usertarjetaService.getUserTarjetas({}, page, limit)
+        return res.status(200).json({ status: 200, data: UserTarjetas, message: "Tarjetas de usuario recuperadas exitosamente" });
     } catch (e) {
 
         return res.status(400).json({ status: 400, message: e.message });
@@ -33,18 +18,18 @@ exports.getTarjeta = async function (req, res, next) {
 }
 
 // Agregar tarjeta
-exports.agregarTarjeta = async function (req, res, next) {
+exports.postUserTarjeta = async function (req, res, next) {
 
-    var tarjeta = {
-        descripcion: req.body.descripcion,
-        limite: req.body.limite,
+    var usertarjeta = {
+        idUsuario: req.body.idUsuario,
+        idTarjeta: req.body.idTarjeta,
     }
     try {
-        var agregandoTarjeta = await tarjetaService.agregarTarjeta(tarjeta)
-        return res.status(201).json({ agregandoTarjeta, message: "tarjeta generada exitosamente" })
+        var agregandoUserTarjeta = await usertarjetaService.postUserTarjeta(usertarjeta)
+        return res.status(201).json({ agregandoUserTarjeta, message: "user tarjeta generada exitosamente" })
     } catch (e) {
         console.log(e)
-        return res.status(400).json({ status: 400, message: "Tarjeta no pudo generarse" })
+        return res.status(400).json({ status: 400, message: "user Tarjeta no pudo generarse" })
     }
 }
 

@@ -1,20 +1,19 @@
 var User = require('../models/User.model');
-var tarjeta = require('../models/Tarjeta.model');
+var usertarjeta = require('../models/UserTarjeta.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 _this = this
 
 // Recupero tarjetas
-exports.getTarjetas = async function (query, page, limit) {
+exports.getUserTarjeta = async function (id) {
 
-    var options = {
-        page,
-        limit
+    var filtro = {
+        idUsuario: id,
     }
     try {
-        var Tarjetas = await tarjeta.paginate(query, options)
-        return Tarjetas;
+        var UserTarjeta = await usertarjeta.paginate(filtro)
+        return UserTarjeta;
 
     } catch (e) {
         console.log("error servicio", e)
@@ -22,41 +21,25 @@ exports.getTarjetas = async function (query, page, limit) {
     }
 }
 
-exports.getTarjeta = async function (query, page, limit) {
-
-    var options = {
-        page,
-        limit
-    }
-    try {
-        var Tarjeta = await tarjeta.find({descripcion: query});
-        return Tarjeta;
-
-    } catch (e) {
-        console.log("error servicio", e)
-        throw Error('Error en el paginado de tarjeta');
-    }
-}
-
 // Creo tarjeta
-exports.agregarTarjeta = async function (Tarjeta) {    
+exports.postUserTarjeta = async function (UserTarjeta) {    
 
-    var nuevaTarjeta = new tarjeta({
-        descripcion: Tarjeta.descripcion,
-        limite: Tarjeta.limite,
+    var nuevoUserTarjeta = new usertarjeta({
+        idUsuario: usertarjeta.idUsuario,
+        idTarjeta: usertarjeta.idTarjeta,
     })
 
     try {
-        var TarjetaGuardada = await nuevaTarjeta.save();
+        var UserTarjetaGuardado = await nuevoUserTarjeta.save();
         var token = jwt.sign({
-            id: TarjetaGuardada._id
+            id: UserTarjetaGuardado._id
         }, process.env.SECRET, {
             expiresIn: 86400 // expires in 24 hours
         });
         return token;
     } catch (e) {
         console.log(e)
-        throw Error("Error while Creating User")
+        throw Error("Error while Creating User Tarjeta")
     }
 }
 
