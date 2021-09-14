@@ -33,55 +33,17 @@ exports.postUserTarjeta = async function (req, res, next) {
     }
 }
 
-// Actualizacion de usuarios
-exports.updateUser = async function (req, res, next) {
-
-    if (!req.body.dni) {
-        return res.status(400).json({ status: 400., message: "DNI debe estar presente" })
+exports.asignarTarjeta = async function(req, res, next){
+    var userTarjeta = {
+        dni: req.query.dni,
     }
-    var User = {
 
-        name: req.body.name ? req.body.name : null,
-        lastname: req.body.lastname ? req.body.lastname : null,
-        email: req.body.email ? req.body.email : null,
-        dni: req.body.dni ? req.body.dni : null,
-        password: req.body.password ? req.body.password : null,
-        root: req.body.root ? req.body.root : "N",
-        nrotarjeta: req.body.nrotarjeta ? req.body.nrotarjeta : null
-    }
+    console.log("siiiii ",userTarjeta)
     try {
-        var updatedUser = await UserService.updateUser(User)
-        return res.status(200).json({ status: 200, data: updatedUser, message: "Usuario actualizado exitosamente" })
-    } catch (e) {
-        return res.status(400).json({ status: 400., message: e.message })
-    }
-}
-
-// Eliminar usuarios
-exports.removeUser = async function (req, res, next) {
-
-    var id = req.body.id;
-    try {
-        var deleted = await UserService.deleteUser(id);
-        return res.status(200).send("Usuario eliminado exitosamente");
+        var asignandoTarjeta = await usertarjetaService.asignarTarjeta(userTarjeta)
+        return res.status(201).json({ asignandoTarjeta, message: "user tarjeta asignada exitosamente" })
     } catch (e) {
         console.log(e)
-        return res.status(400).json({ status: 400, message: e.message })
-    }
-}
-
-// Login usuarios
-exports.loginUser = async function (req, res, next) {
-
-    var User = {
-        email: req.body.email,
-        password: req.body.password
-    }
-    try {
-
-        var loginUser = await UserService.loginUser(User);
-        return res.status(201).json({ loginUser, message: "login exitoso" })
-    } catch (e) {
-        return res.status(400).json({ status: 400, message: "Usuario/Contraseña invalido" })
+        return res.status(400).json({ status: 400, message: "user Tarjeta no pudo asignarse" })
     }
 }

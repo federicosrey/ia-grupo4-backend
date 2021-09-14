@@ -27,7 +27,6 @@ exports.createUser = async function (req, res, next) {
         dni: req.body.dni,
         root: req.body.root,
         nrotarjeta: req.body.nrotarjeta
-
     }
     try {
         var createdUser = await UserService.createUser(User)

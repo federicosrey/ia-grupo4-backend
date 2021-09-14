@@ -43,6 +43,38 @@ exports.postUserTarjeta = async function (UserTarjeta) {
     }
 }
 
+// Asigno tarjeta
+exports.asignarTarjeta = async function (userTarjeta) {
+
+    var DNI = userTarjeta.dni
+
+    try {
+        var usuario = new User();
+        
+        usuario = await User.find({dni: DNI});
+    } catch (e) {
+        throw Error("Error al encontrar al usuario")
+    }
+    if (!usuario) {
+        return false;
+    }
+    
+    var tarjeta = {
+        idTipoTarjeta: 1,
+        numero: usuario.dni,
+        fechaVencimiento: Date.now(),
+        fechaCierre: Date.now()+30
+    }
+    
+    try {
+        var asignartarjeta = await usuario.tarjetas.create(tarjeta);
+        //var guardarUsuario = await usuario.save();
+        return asignartarjeta;
+    } catch (e) {
+        throw Error("Error al querer asignar tarjeta");
+    }
+}
+
 // Actualizo usuarios
 exports.updateUser = async function (user) {
 

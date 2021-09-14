@@ -1,6 +1,13 @@
 var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate')
 
+var tarjetaSchema = new mongoose.Schema({
+    idTipoTarjeta: Number,
+    numero: String,
+    fechaVencimiento: Date,
+    fechaCierre: Date
+})
+
 var UserSchema = new mongoose.Schema({
     name: String,
     lastname: String,
@@ -9,7 +16,11 @@ var UserSchema = new mongoose.Schema({
     password: String,
     nrotarjeta: String,
     root: String,
-    date: Date
+    date: Date,    
+    tarjetas: {
+        type: [tarjetaSchema],
+        default: () => ({})
+      }
 })
 
 UserSchema.plugin(mongoosePaginate)
