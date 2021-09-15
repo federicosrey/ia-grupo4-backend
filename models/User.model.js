@@ -17,10 +17,7 @@ var UserSchema = new mongoose.Schema({
     nrotarjeta: String,
     root: String,
     date: Date,    
-    tarjetas: {
-        type: [tarjetaSchema],
-        default: () => ({})
-      }
+    tarjetas: [tarjetaSchema]
 })
 
 UserSchema.plugin(mongoosePaginate)

@@ -21,12 +21,8 @@ router.post('/contacto', ContactoController.createContacto)
 router.post('/tarjeta', TarjetaController.agregarTarjeta)
 router.get('/getTarjetas', TarjetaController.getTarjetas)
 router.get('/getTarjeta', TarjetaController.getTarjeta)
+
 router.post('/asignarTarjeta', UserTarjetaController.asignarTarjeta)
-
-
-//Enpoint tarjetas de usuarios
-router.get('/getUserTarjetas', UserTarjetaController.getUserTarjetas)
-router.post('/postUserTarjeta/idUsuario/:idUsuario/idTarjeta/:idTarjeta', UserTarjetaController.postUserTarjeta)
 
 // Endpoints encuesta
 router.post('/encuesta', EncuestaController.createEncuesta)

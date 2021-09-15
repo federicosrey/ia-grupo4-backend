@@ -5,142 +5,44 @@ var jwt = require('jsonwebtoken');
 
 _this = this
 
-// Recupero tarjetas
-exports.getUserTarjeta = async function (id) {
-
-    var filtro = {
-        idUsuario: id,
-    }
-    try {
-        var UserTarjeta = await usertarjeta.paginate(filtro)
-        return UserTarjeta;
-
-    } catch (e) {
-        console.log("error servicio", e)
-        throw Error('Error en el paginado de tarjetas');
-    }
-}
-
-// Creo tarjeta
-exports.postUserTarjeta = async function (UserTarjeta) {    
-
-    var nuevoUserTarjeta = new usertarjeta({
-        idUsuario: usertarjeta.idUsuario,
-        idTarjeta: usertarjeta.idTarjeta,
-    })
-
-    try {
-        var UserTarjetaGuardado = await nuevoUserTarjeta.save();
-        var token = jwt.sign({
-            id: UserTarjetaGuardado._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
-    } catch (e) {
-        console.log(e)
-        throw Error("Error while Creating User Tarjeta")
-    }
-}
-
 // Asigno tarjeta
 exports.asignarTarjeta = async function (userTarjeta) {
 
     var DNI = userTarjeta.dni
 
     try {
-        var usuario = new User();
+        const usuario =  await User.findOne({dni:DNI});
+        //const tarjetas = usuario.tarjetas;
+        //console.log("es array ",tarjetas);
+        //usuario = await User.find({dni: DNI});
+
+        usuario.tarjetas.push({
+            idTipoTarjeta: 3,
+            numero: '777',
+            fechaVencimiento: Date.now(),
+            fechaCierre: Date.now()+30
+        })
         
-        usuario = await User.find({dni: DNI});
+
+        /* var usuario.tarjetas = [{
+            idTipoTarjeta: 1,
+            numero: "777",
+            fechaVencimiento: Date.now(),
+            fechaCierre: Date.now()+30
+        }]*/
+        
+        
+        var asignartarjeta = await usuario.save(); 
+        
+        console.log(asignartarjeta)
+        return asignartarjeta;
+        
     } catch (e) {
         throw Error("Error al encontrar al usuario")
     }
-    if (!usuario) {
+    /* if (!usuario) {
         return false;
-    }
+    } */
     
-    var tarjeta = {
-        idTipoTarjeta: 1,
-        numero: usuario.dni,
-        fechaVencimiento: Date.now(),
-        fechaCierre: Date.now()+30
-    }
     
-    try {
-        var asignartarjeta = await usuario.tarjetas.create(tarjeta);
-        //var guardarUsuario = await usuario.save();
-        return asignartarjeta;
-    } catch (e) {
-        throw Error("Error al querer asignar tarjeta");
-    }
-}
-
-// Actualizo usuarios
-exports.updateUser = async function (user) {
-
-    var ids = { dni: user.dni }
-
-    try {
-        var oldUser = await User.findOne(ids);
-    } catch (e) {
-        throw Error("Error al encontrar el usuarios")
-    }
-    if (!oldUser) {
-        return false;
-    }
-    var hashedPassword = bcrypt.hashSync(user.password, 8);
-    oldUser.name = user.name
-    oldUser.lastname = user.lastname
-    oldUser.email = user.email
-    oldUser.dni = user.dni
-    oldUser.password = hashedPassword
-    oldUser.root = user.root
-    oldUser.nrotarjeta = user.nrotarjeta
-
-    try {
-        var savedUser = await oldUser.save()
-        return savedUser;
-    } catch (e) {
-        throw Error("Error al querer actualizar el usuario");
-    }
-}
-
-// Deleteo usuario
-exports.deleteUser = async function (id) {
-
-    try {
-        var deleted = await User.remove({
-            _id: id
-        })
-        if (deleted.n === 0 && deleted.ok === 1) {
-            throw Error("Usuario no pudo eliminarse")
-        }
-        return deleted;
-    } catch (e) {
-        console.log(e)
-        throw Error("Error al querer elimianr el usuario")
-    }
-}
-
-// Login usuario
-exports.loginUser = async function (user) {
-
-    try {
-
-        var _details = await User.findOne({
-            email: user.email
-        });
-        var passwordIsValid = bcrypt.compareSync(user.password, _details.password);
-        if (!passwordIsValid) throw Error("Usuario/Contraseña invalido")
-
-        var token = jwt.sign({
-            id: _details._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return { token: token, user: _details };
-    } catch (e) {
-        throw Error("Error al login de usuario")
-    }
-
 }
