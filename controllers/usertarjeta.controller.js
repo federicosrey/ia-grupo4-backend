@@ -5,10 +5,11 @@ _this = this;
 
 exports.asignarTarjeta = async function(req, res, next){
     var userTarjeta = {
-        dni: req.query.dni,
+        dni: req.body.dni,
+        tarjeta: req.body.tarjeta
     }
 
-    console.log("siiiii ",userTarjeta)
+    console.log("controller ",userTarjeta)
     try {
         var asignandoTarjeta = await usertarjetaService.asignarTarjeta(userTarjeta)
         return res.status(201).json({ asignandoTarjeta, message: "user tarjeta asignada exitosamente" })

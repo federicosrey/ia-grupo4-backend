@@ -1,8 +1,10 @@
 var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate')
 
+
 var tarjetaSchema = new mongoose.Schema({
-    idTipoTarjeta: Number,
+    descripcion: String,
+    limite: Number,
     numero: String,
     fechaVencimiento: Date,
     fechaCierre: Date

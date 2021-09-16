@@ -1,5 +1,5 @@
 var User = require('../models/User.model');
-var usertarjeta = require('../models/UserTarjeta.model');
+var Tarjeta = require('../models/Tarjeta.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
@@ -9,18 +9,21 @@ _this = this
 exports.asignarTarjeta = async function (userTarjeta) {
 
     var DNI = userTarjeta.dni
+    var tarjeta = userTarjeta.tarjeta
 
     try {
         const usuario =  await User.findOne({dni:DNI});
         //const tarjetas = usuario.tarjetas;
         //console.log("es array ",tarjetas);
         //usuario = await User.find({dni: DNI});
+        const t = await Tarjeta.findOne({descripcion:tarjeta});
 
         usuario.tarjetas.push({
-            idTipoTarjeta: 3,
-            numero: '777',
+            descripcion: t.descripcion,
+            limite: t.limite,
+            numero: '6321 4456 '.concat(' ',usuario.dni),
             fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()+30
+            fechaCierre: Date.now()
         })
         
 
@@ -34,7 +37,7 @@ exports.asignarTarjeta = async function (userTarjeta) {
         
         var asignartarjeta = await usuario.save(); 
         
-        console.log(asignartarjeta)
+        
         return asignartarjeta;
         
     } catch (e) {
