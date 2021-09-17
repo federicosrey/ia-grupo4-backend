@@ -5,6 +5,7 @@ var ContactoController = require('../../controllers/contacto.controller');
 var EncuestaController = require('../../controllers/encuesta.controller');
 var TarjetaController = require('../../controllers/tarjeta.controller');
 var UserTarjetaController = require('../../controllers/usertarjeta.controller');
+var MovimientoController = require('../../controllers/movimiento.controller');
 var Authorization = require('../../auth/authorization');
 
 // Endpoints usuarios
@@ -23,6 +24,7 @@ router.get('/getTarjetas', TarjetaController.getTarjetas)
 router.get('/getTarjeta', TarjetaController.getTarjeta)
 
 router.post('/asignarTarjeta', UserTarjetaController.asignarTarjeta)
+router.post('/agregarMovimiento', MovimientoController.agregarMovimiento)
 
 // Endpoints encuesta
 router.post('/encuesta', EncuestaController.createEncuesta)
