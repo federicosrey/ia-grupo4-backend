@@ -77,3 +77,21 @@ exports.agregarMovimiento = async function (movimiento) {
         throw Error("Error creando movimiento")
     }
 }
+
+exports.getMovimientos = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        var movimientos = await Movimiento.find();
+        return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
+

@@ -25,6 +25,7 @@ router.get('/getTarjeta', TarjetaController.getTarjeta)
 
 router.post('/asignarTarjeta', UserTarjetaController.asignarTarjeta)
 router.post('/agregarMovimiento', MovimientoController.agregarMovimiento)
+router.get('/getMovimientos', MovimientoController.getMovimientos)
 
 // Endpoints encuesta
 router.post('/encuesta', EncuestaController.createEncuesta)

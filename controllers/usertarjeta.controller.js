@@ -18,3 +18,4 @@ exports.asignarTarjeta = async function(req, res, next){
         return res.status(400).json({ status: 400, message: "user Tarjeta no pudo asignarse" })
     }
 }
+
