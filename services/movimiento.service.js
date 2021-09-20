@@ -85,7 +85,21 @@ exports.getMovimientos = async function (query, page, limit) {
         limit
     }
     try {
-        var movimientos = await Movimiento.find();
+        //var movimientos = await Movimiento.find();
+
+        var movimientos = await Movimiento.aggregate([
+            {
+                $group:
+                {
+                    _id: { dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta" },  
+                    mov: {$addToSet: "$monto"},                  
+                    total: { $sum: "$monto" }
+                    
+                }
+            }
+        ])
+
+        
         return movimientos;
 
     } catch (e) {
