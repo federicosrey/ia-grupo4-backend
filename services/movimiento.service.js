@@ -85,6 +85,22 @@ exports.getMovimientos = async function (query, page, limit) {
         limit
     }
     try {
+        var movimientos = await Movimiento.find();           
+        return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
+exports.getLiquidacion = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
         //var movimientos = await Movimiento.find();
 
         var movimientos = await Movimiento.aggregate([
@@ -92,7 +108,7 @@ exports.getMovimientos = async function (query, page, limit) {
                 $group:
                 {
                     _id: { dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta" },  
-                    mov: {$addToSet: "$monto"},                  
+                    mov: {$addToSet: "$_id"},                  
                     total: { $sum: "$monto" }
                     
                 }
