@@ -78,7 +78,7 @@ exports.agregarMovimiento = async function (movimiento) {
     }
 }
 
-exports.getMovimientos = async function (query, page, limit) {
+exports.getMovimientosUsuario = async function (query, page, limit) {
 
     var options = {
         page,
@@ -94,7 +94,26 @@ exports.getMovimientos = async function (query, page, limit) {
     }
 }
 
-exports.getLiquidacion = async function (query, page, limit) {
+exports.UpdateidLiquidacionMovimiento = async function (idmovimiento, idliquidacion) {
+    console.log(idmovimiento)
+    console.log(idliquidacion)
+    
+    try {
+        var movimientos = await Movimiento.findOne({_id: idmovimiento}); 
+       
+        movimientos.idLiquidacion = idliquidacion
+        var movimientosaved = await movimientos.save();
+        return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
+
+
+exports.getMovimientos = async function (query, page, limit) {
 
     var options = {
         page,
@@ -105,12 +124,17 @@ exports.getLiquidacion = async function (query, page, limit) {
 
         var movimientos = await Movimiento.aggregate([
             {
+                $match:
+                {
+                   idLiquidacion:"0"
+                }
+            },
+            {
                 $group:
                 {
                     _id: { dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta" },  
                     mov: {$addToSet: "$_id"},                  
                     total: { $sum: "$monto" }
-                    
                 }
             }
         ])

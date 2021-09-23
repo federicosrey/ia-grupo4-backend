@@ -15,7 +15,7 @@ var MovimientoSchema = new mongoose.Schema({
     dniNegocio: Number,
     numeroTarjeta: Number, 
     monto: Number,
-    idLiquidacion: Number,
+    idLiquidacion: String,
     idPago: Number,
 })
 

@@ -29,8 +29,9 @@ router.get('/getTarjeta', TarjetaController.getTarjeta)
 router.post('/asignarTarjeta', UserTarjetaController.asignarTarjeta)
 router.post('/agregarMovimiento', MovimientoController.agregarMovimiento)
 router.get('/getMovimientos', MovimientoController.getMovimientos)
+router.post('/UpdateidLiquidacionMovimiento', MovimientoController.UpdateidLiquidacionMovimiento)
 
-router.post('/agregarLiquidacion', LiquidacionController.agregarLiquidacion)
+router.post('/postLiquidaciones', LiquidacionController.postLiquidaciones)
 router.get('/getLiquidaciones', LiquidacionController.getLiquidaciones)
 
 router.post('/agregarCobro', CobroController.agregarCobro)

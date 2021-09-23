@@ -65,12 +65,8 @@ exports.agregarLiquidacion = async function (liquidacion) {
 
     try {
         var liquidacionGuardada = await nuevaLiquidacion.save();
-        var token = jwt.sign({
-            id: liquidacionGuardada._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
+        console.log("aca ",liquidacionGuardada._id)
+        return liquidacionGuardada._id;
     } catch (e) {
         console.log(e)
         throw Error("Error creando liquidacion")

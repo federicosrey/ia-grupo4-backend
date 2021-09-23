@@ -34,3 +34,19 @@ exports.getMovimientos = async function (req, res, next) {
         return res.status(400).json({ status: 400, message: e.message });
     }
 }
+
+exports.UpdateidLiquidacionMovimiento = async function (req, res, next) {
+
+    var idMovimiento = req.body.idmovimiento;
+    var idLiquidacion = req.body.idliquidacion;
+    
+    try {
+        var agregandoMovimiento = await movimientoService.UpdateidLiquidacionMovimiento(idMovimiento,idLiquidacion)
+        return res.status(201).json({ agregandoMovimiento, message: "movimiento generado exitosamente" })
+    } catch (e) {
+        console.log(e)
+        return res.status(400).json({ status: 400, message: "movimiento no pudo generarse" })
+    }
+}
+
+

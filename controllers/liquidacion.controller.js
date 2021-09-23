@@ -2,22 +2,24 @@ var liquidacionService = require('../services/liquidacion.service');
 _this = this;
 
 // Agrega venta del negocio
-exports.agregarLiquidacion = async function (req, res, next) {
+exports.postLiquidaciones = async function (req, res, next) {
 
-    var liquidacion = {
+     var liquidacion = {
         idCobro: 0,
         fecha: Date.now(),
-        dniUsuario: req.body.dniusuario,
+        dniUsuario: req.body.dniUsuario,
         numeroTarjeta: req.body.numerotarjeta, 
         total: req.body.total,
-    }
-    try {
+    } 
+    
+     try {
         var agregandoLiquidacion = await liquidacionService.agregarLiquidacion(liquidacion)
-        return res.status(201).json({ agregandoLiquidacion, message: "Liquidación generada exitosamente" })
+        console.log("cont ", agregandoLiquidacion)
+        return res.status(201).json({ data: agregandoLiquidacion, message: "Liquidación generada exitosamente" })
     } catch (e) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "liquidacion no pudo generarse" })
-    }
+    } 
 }
 
 exports.getLiquidaciones = async function (req, res, next) {
