@@ -3,6 +3,7 @@ var Tarjeta = require('../models/Tarjeta.model');
 var Movimiento = require('../models/Movimiento.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+const { getUsers } = require('./user.service');
 
 _this = this
 
@@ -121,7 +122,7 @@ exports.getMovimientos = async function (query, page, limit) {
     }
     try {
         //var movimientos = await Movimiento.find();
-
+        
         var movimientos = await Movimiento.aggregate([
             {
                 $match:
@@ -139,8 +140,41 @@ exports.getMovimientos = async function (query, page, limit) {
             }
         ])
 
-        
         return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
+exports.getNMovimientos = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var nmovimientos = await Movimiento.aggregate([
+            {
+                $match:
+                {
+                    idPago:"0"
+                }
+            },
+            {
+                $group:
+                {
+                    _id: { dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta" },  
+                    mov: {$addToSet: "$_id"},                  
+                    total: { $sum: "$monto" }
+                }
+            }
+        ])
+
+        return nmovimientos;
 
     } catch (e) {
         console.log("error servicio", e)

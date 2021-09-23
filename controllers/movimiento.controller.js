@@ -35,6 +35,20 @@ exports.getMovimientos = async function (req, res, next) {
     }
 }
 
+exports.getNMovimientos = async function (req, res, next) {
+
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    try {
+        var movimientos = await movimientoService.getNMovimientos({}, page, limit)
+        return res.status(200).json({ status: 200, data: movimientos, message: "movimientos recuperados exitosamente" });
+    } catch (e) {
+
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+}
+
 exports.UpdateidLiquidacionMovimiento = async function (req, res, next) {
 
     var idMovimiento = req.body.idmovimiento;

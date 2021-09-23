@@ -16,7 +16,7 @@ var MovimientoSchema = new mongoose.Schema({
     numeroTarjeta: Number, 
     monto: Number,
     idLiquidacion: String,
-    idPago: Number,
+    idPago: String,
 })
 
 MovimientoSchema.plugin(mongoosePaginate)
