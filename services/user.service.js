@@ -120,3 +120,22 @@ exports.loginUser = async function (user) {
     }
 
 }
+
+exports.getInfoUsuario = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var liquidaciones = await User.paginate(query,options)
+
+        return liquidaciones;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}

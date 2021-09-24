@@ -89,3 +89,51 @@ exports.loginUser = async function (req, res, next) {
         return res.status(400).json({ status: 400, message: "Usuario/Contraseña invalido" })
     }
 }
+
+exports.getInfoUsuario = async function (req, res, next) {
+
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    var filtro = {
+
+        dni: req.body.dniUsuario,
+    
+      };
+
+
+    try {
+        var liquidaciones = await UserService.getInfoUsuario(filtro, page, limit)
+        if (liquidaciones.dni === "0")
+
+        return res.status(201).json({
+  
+          status: 201,
+  
+          data: liquidaciones,
+  
+          message: "No existe la empresa por ID",
+  
+        });
+  
+      else
+  
+        return res.status(200).json({
+  
+          status: 200,
+  
+          data: liquidaciones,
+  
+          message: "Empresa por ID recuperada exitosamente",
+  
+        });
+  
+    } catch (e) {
+  
+      console.log(e);
+  
+      return res.status(400).json({ status: 400, message: e.message });
+  
+    }
+        
+}
