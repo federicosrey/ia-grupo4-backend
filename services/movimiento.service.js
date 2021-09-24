@@ -129,6 +129,25 @@ exports.UpdateidPagoMovimiento = async function (idmovimiento, idpago) {
     }
 }
 
+exports.getUMovimientos = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var liquidaciones = await Movimiento.paginate(query,options)
+
+        return liquidaciones;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
 
 exports.getMovimientos = async function (query, page, limit) {
 

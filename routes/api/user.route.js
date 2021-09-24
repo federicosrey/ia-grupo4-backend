@@ -33,6 +33,7 @@ router.post('/asignarTarjeta', UserTarjetaController.asignarTarjeta)
 router.post('/agregarMovimiento', MovimientoController.agregarMovimiento)
 router.get('/getMovimientos', MovimientoController.getMovimientos)
 router.get('/getNMovimientos', MovimientoController.getNMovimientos)
+router.post('/getUMovimientos', MovimientoController.getUMovimientos)
 
 router.post('/UpdateidLiquidacionMovimiento', MovimientoController.UpdateidLiquidacionMovimiento)
 router.post('/UpdateidPagoMovimiento', MovimientoController.UpdateidPagoMovimiento)
