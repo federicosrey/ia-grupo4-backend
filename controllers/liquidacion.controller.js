@@ -27,11 +27,61 @@ exports.getLiquidaciones = async function (req, res, next) {
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 1000;
     
-    try {
-        var liquidaciones = await liquidacionService.getLiquidaciones({}, page, limit)
-        return res.status(200).json({ status: 200, data: liquidaciones, message: "liquidaciones recuperadas exitosamente" });
-    } catch (e) {
+    var filtro = {
 
-        return res.status(400).json({ status: 400, message: e.message });
+        dniUsuario: req.body.dniUsuario,
+    
+      };
+
+
+    try {
+        var liquidaciones = await liquidacionService.getLiquidaciones(filtro, page, limit)
+        if (liquidaciones.total === 0)
+
+        return res.status(201).json({
+  
+          status: 201,
+  
+          data: liquidaciones,
+  
+          message: "No existe la empresa por ID",
+  
+        });
+  
+      else
+  
+        return res.status(200).json({
+  
+          status: 200,
+  
+          data: liquidaciones,
+  
+          message: "Empresa por ID recuperada exitosamente",
+  
+        });
+  
+    } catch (e) {
+  
+      console.log(e);
+  
+      return res.status(400).json({ status: 400, message: e.message });
+  
+    }
+        
+}
+
+
+
+exports.UpdateidCobroLiquidacion = async function (req, res, next) {
+
+    var idLiquidacion = req.body.idLiquidacion;
+    var idCobro = req.body.idCobro;
+    
+    try {
+        var agregandoMovimiento = await liquidacionService.UpdateidCobroLiquidacion(idLiquidacion,idCobro)
+        return res.status(201).json({ agregandoMovimiento, message: "movimiento generado exitosamente" })
+    } catch (e) {
+        console.log(e)
+        return res.status(400).json({ status: 400, message: "movimiento no pudo generarse" })
     }
 }

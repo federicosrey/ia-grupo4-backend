@@ -58,18 +58,14 @@ exports.agregarCobro = async function (cobro) {
 
     var nuevoCobro = new Cobro({
         fecha: cobro.fecha,
-        dniUsuario: cobro.dniusuario, 
+        dniUsuario: cobro.dniUsuario, 
         total: cobro.total
     })
 
     try {
         var cobroGuardado = await nuevoCobro.save();
-        var token = jwt.sign({
-            id: cobroGuardado._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
+        
+        return cobroGuardado._id;
     } catch (e) {
         console.log(e)
         throw Error("Error creando cobro")

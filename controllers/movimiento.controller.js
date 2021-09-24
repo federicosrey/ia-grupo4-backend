@@ -66,7 +66,7 @@ exports.UpdateidLiquidacionMovimiento = async function (req, res, next) {
 exports.UpdateidPagoMovimiento = async function (req, res, next) {
 
     var idMovimiento = req.body.idmovimiento;
-    var idPago = req.body.idPago;
+    var idPago = req.body.idpago;
     
     try {
         var agregandoMovimiento = await movimientoService.UpdateidPagoMovimiento(idMovimiento,idPago)

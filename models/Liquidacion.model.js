@@ -10,7 +10,7 @@ var LiquidacionSchema = new mongoose.Schema({
         primaryKey: true,
         type: Number
     },
-    idCobro: Number,
+    idCobro: String,
     fecha: Date,
     dniUsuario: Number,
     numeroTarjeta: Number, 

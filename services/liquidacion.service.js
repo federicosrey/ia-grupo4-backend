@@ -65,7 +65,7 @@ exports.agregarLiquidacion = async function (liquidacion) {
 
     try {
         var liquidacionGuardada = await nuevaLiquidacion.save();
-        console.log("aca ",liquidacionGuardada._id)
+        
         return liquidacionGuardada._id;
     } catch (e) {
         console.log(e)
@@ -80,12 +80,31 @@ exports.getLiquidaciones = async function (query, page, limit) {
         limit
     }
     try {
-        var liquidaciones = await Liquidacion.find();
+        //var movimientos = await Movimiento.find();
+        
+        var liquidaciones = await Liquidacion.paginate(query,options)
+
         return liquidaciones;
 
     } catch (e) {
         console.log("error servicio", e)
-        throw Error('Error en el paginado de liquidaciones');
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
+exports.UpdateidCobroLiquidacion = async function (idLiquidacion, idCobro) {
+    
+    
+    try {
+        var liquidacion = await Liquidacion.findOne({_id: idLiquidacion}); 
+       
+        liquidacion.idCobro = idCobro
+        var liquidacionsaved = await liquidacion.save();
+        return liquidacionsaved;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
     }
 }
 

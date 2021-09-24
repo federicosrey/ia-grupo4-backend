@@ -3,7 +3,7 @@ _this = this;
 
 // Agrega venta del negocio
 exports.agregarPago = async function (req, res, next) {
-
+    
     var pago = {
         fecha: Date.now(),
         dniNegocio: req.body.dninegocio, 
@@ -11,7 +11,7 @@ exports.agregarPago = async function (req, res, next) {
     }
     try {
         var agregandoPago = await pagoService.agregarPago(pago)
-        return res.status(201).json({ agregandoPago, message: "Pago generado exitosamente" })
+        return res.status(201).json({ data:agregandoPago, message: "Pago generado exitosamente" })
     } catch (e) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "pago no pudo generarse" })

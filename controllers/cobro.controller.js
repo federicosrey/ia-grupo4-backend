@@ -6,12 +6,12 @@ exports.agregarCobro = async function (req, res, next) {
 
     var cobro = {
         fecha: Date.now(),
-        dniUsuario: req.body.dniusuario, 
+        dniUsuario: req.body.dniUsuario, 
         total: req.body.total
     }
     try {
         var agregandoCobro = await cobroService.agregarCobro(cobro)
-        return res.status(201).json({ agregandoCobro, message: "Cobro generado exitosamente" })
+        return res.status(201).json({ data:agregandoCobro, message: "Cobro generado exitosamente" })
     } catch (e) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "Cobro no pudo generarse" })

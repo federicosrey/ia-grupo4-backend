@@ -58,18 +58,14 @@ exports.agregarPago = async function (pago) {
 
     var nuevoPago = new Pago({
         fecha: pago.fecha,
-        dniNegocio: pago.dninegocio, 
+        dniNegocio: pago.dniNegocio, 
         total: pago.total
     })
 
     try {
         var pagoGuardado = await nuevoPago.save();
-        var token = jwt.sign({
-            id: pagoGuardado._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
+        
+        return pagoGuardado._id;
     } catch (e) {
         console.log(e)
         throw Error("Error creando pago")

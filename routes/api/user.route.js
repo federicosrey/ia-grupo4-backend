@@ -35,7 +35,8 @@ router.post('/UpdateidLiquidacionMovimiento', MovimientoController.UpdateidLiqui
 router.post('/UpdateidPagoMovimiento', MovimientoController.UpdateidPagoMovimiento)
 
 router.post('/postLiquidaciones', LiquidacionController.postLiquidaciones)
-router.get('/getLiquidaciones', LiquidacionController.getLiquidaciones)
+router.post('/getLiquidaciones', LiquidacionController.getLiquidaciones)
+router.post('/UpdateidCobroLiquidacion', LiquidacionController.UpdateidCobroLiquidacion)
 
 router.post('/agregarCobro', CobroController.agregarCobro)
 router.get('/getCobros', CobroController.getCobros)
