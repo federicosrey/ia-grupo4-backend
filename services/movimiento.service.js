@@ -113,6 +113,22 @@ exports.UpdateidLiquidacionMovimiento = async function (idmovimiento, idliquidac
 }
 
 
+exports.UpdateidPagoMovimiento = async function (idmovimiento, idpago) {
+    
+    
+    try {
+        var movimientos = await Movimiento.findOne({_id: idmovimiento}); 
+       
+        movimientos.idPago = idpago
+        var movimientosaved = await movimientos.save();
+        return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
 
 exports.getMovimientos = async function (query, page, limit) {
 
@@ -167,7 +183,7 @@ exports.getNMovimientos = async function (query, page, limit) {
             {
                 $group:
                 {
-                    _id: { dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta" },  
+                    _id: { dniNegocio: "$dniNegocio"},  
                     mov: {$addToSet: "$_id"},                  
                     total: { $sum: "$monto" }
                 }
