@@ -44,12 +44,12 @@ exports.getUMovimientos = async function (req, res, next) {
 
         dniUsuario: req.body.dniUsuario,
     
-      };
+    };
 
 
     try {
         var liquidaciones = await movimientoService.getUMovimientos(filtro, page, limit)
-        if (liquidaciones.dniUsuario === "0")
+        if (liquidaciones.dniUsuario === 0)
 
         return res.status(201).json({
   
@@ -88,12 +88,45 @@ exports.getNMovimientos = async function (req, res, next) {
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 1000;
     
-    try {
-        var movimientos = await movimientoService.getNMovimientos({}, page, limit)
-        return res.status(200).json({ status: 200, data: movimientos, message: "movimientos recuperados exitosamente" });
-    } catch (e) {
+    var filtro = {
 
-        return res.status(400).json({ status: 400, message: e.message });
+        dniNegocio: req.body.dniNegocio,
+    
+    };
+
+
+    try {
+        var liquidaciones = await movimientoService.getNMovimientos(filtro, page, limit)
+        if (liquidaciones.dniUsuario === 0)
+
+        return res.status(201).json({
+  
+          status: 201,
+  
+          data: liquidaciones,
+  
+          message: "No existe la empresa por ID",
+  
+        });
+  
+      else
+  
+        return res.status(200).json({
+  
+          status: 200,
+  
+          data: liquidaciones,
+  
+          message: "Empresa por ID recuperada exitosamente",
+  
+        });
+  
+    } catch (e) {
+  
+      console.log(e);
+  
+      return res.status(400).json({ status: 400, message: e.message });
+  
     }
 }
 

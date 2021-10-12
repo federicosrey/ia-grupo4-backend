@@ -9,10 +9,10 @@ exports.asignarTarjeta = async function(req, res, next){
         tarjeta: req.body.tarjeta
     }
 
-    console.log("controller ",userTarjeta)
+    console.log("control ",userTarjeta)
     try {
         var asignandoTarjeta = await usertarjetaService.asignarTarjeta(userTarjeta)
-        return res.status(201).json({ asignandoTarjeta, message: "user tarjeta asignada exitosamente" })
+        return res.status(201).json({ status: 201, data: asignandoTarjeta, message: "Tarjeta asignada exitosamente" })
     } catch (e) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "user Tarjeta no pudo asignarse" })

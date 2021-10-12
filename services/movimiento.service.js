@@ -192,24 +192,9 @@ exports.getNMovimientos = async function (query, page, limit) {
     try {
         //var movimientos = await Movimiento.find();
         
-        var nmovimientos = await Movimiento.aggregate([
-            {
-                $match:
-                {
-                    idPago:"0"
-                }
-            },
-            {
-                $group:
-                {
-                    _id: { dniNegocio: "$dniNegocio"},  
-                    mov: {$addToSet: "$_id"},                  
-                    total: { $sum: "$monto" }
-                }
-            }
-        ])
+        var liquidaciones = await Movimiento.paginate(query,options)
 
-        return nmovimientos;
+        return liquidaciones;
 
     } catch (e) {
         console.log("error servicio", e)

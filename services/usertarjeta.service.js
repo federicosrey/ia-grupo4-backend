@@ -12,21 +12,22 @@ exports.asignarTarjeta = async function (userTarjeta) {
     var tarjeta = userTarjeta.tarjeta
     
     try {
-        const usuario =  await User.findOne({dni:DNI});
+        const usuario =  await User.findOne({_id:DNI});
         //const tarjetas = usuario.tarjetas;
         //console.log("es array ",tarjetas);
         //usuario = await User.find({dni: DNI});
         console.log("asignacion 1: ",usuario);
         const t = await Tarjeta.findOne({descripcion:tarjeta});
-        
+        console.log("la tarjeta que encontro: ",t);
+
         usuario.tarjetas.push({
             descripcion: t.descripcion,
             limite: t.limite,
             numero: '6321 4456 '.concat(' ',usuario.dni),
             fechaVencimiento: Date.now(),
-            fechaCierre: f
+            fechaCierre: Date.now()
         })
-        console.log("asignacion 2: ",usuario);
+        
 
         /* var usuario.tarjetas = [{
             idTipoTarjeta: 1,
@@ -38,7 +39,7 @@ exports.asignarTarjeta = async function (userTarjeta) {
         console.log("asignacion: ",usuario);
         var asignartarjeta = await usuario.save(); 
         
-        
+        console.log("dev ",asignartarjeta);
         return asignartarjeta;
         
     } catch (e) {
