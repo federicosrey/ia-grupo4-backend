@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bluebird = require('bluebird');
 var fs = require('fs');
+const swaggerUI = require ('swagger-ui-express'),
+  swaggerDocument = require ('./swagger.json');
 
 //incorporo cors
 var cors = require('cors');
@@ -38,6 +40,7 @@ app.use('/api', apiRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/utils/',utilRouter);
+app.use('/endpoints', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 //onsole.log("processENV",process.env);
 if (process.env.NODE_ENV === 'Development') {
@@ -86,7 +89,7 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-// Setup server port
+// Setup server por
 var port = process.env.PORT || 8080;
 // Escuchar en el puerto
 app.listen(port,()=>{
@@ -95,3 +98,4 @@ app.listen(port,()=>{
 
 
 module.exports = app;
+
