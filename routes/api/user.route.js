@@ -19,8 +19,6 @@ router.put('/actualizacion', UserController.updateUser)
 router.post('/usr', UserController.removeUser)
 router.post('/getInfoUsuario', UserController.getInfoUsuario)
 
-
-
 // Endpoints contacto
 router.post('/contacto', ContactoController.createContacto)
 
