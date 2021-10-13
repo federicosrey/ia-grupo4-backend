@@ -158,3 +158,72 @@ exports.UpdateidPagoMovimiento = async function (req, res, next) {
     }
 }
 
+exports.getMontosaPagaraEstablecimientos = async function (req, res, next) {
+ 
+    
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    var filtro = {
+
+        dniNegocio: req.body.dniNegocio,
+    };
+    try {
+        var movimientos = await movimientoService.getMontosaPagaraEstablecimientos(filtro, page, limit)
+        if (!req.body.dniNegocio)
+
+        return res.status(201).json({
+          status: 201,
+          //data: movimientos,
+          message: "No existe la empresa por ID",
+        });
+  
+      else
+  
+        return res.status(200).json({
+          status: 200,
+          data: movimientos,
+          message: "Empresa por ID recuperada exitosamente",
+        });
+  
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ status: 400, message: e.message });
+  
+    }
+}
+
+exports.getMontosaCobrarxConsumosClientes = async function (req, res, next) {
+ 
+    
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    var filtro = {
+
+        dniUsuario: req.body.dniUsuario,
+    };
+    try {
+        var movimientos = await movimientoService.getMontosaCobrarxConsumosClientes(filtro, page, limit)
+        if (!req.body.dniUsuario)
+
+        return res.status(201).json({
+          status: 201,
+          //data: movimientos,
+          message: "No existe el usuario por DNI",
+        });
+  
+      else
+  
+        return res.status(200).json({
+          status: 200,
+          data: movimientos,
+          message: "Usuario por DNI recuperado exitosamente",
+        });
+  
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ status: 400, message: e.message });
+  
+    }
+}

@@ -202,4 +202,42 @@ exports.getNMovimientos = async function (query, page, limit) {
     }
 }
 
+exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var movimientos = await Movimiento.paginate(query,options)
+
+        return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
+exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var movimientos = await Movimiento.paginate(query,options)
+
+        return movimientos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
+
 

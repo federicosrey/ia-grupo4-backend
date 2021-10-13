@@ -10,6 +10,7 @@ var LiquidacionController = require('../../controllers/liquidacion.controller');
 var CobroController = require('../../controllers/cobro.controller');
 var PagoController = require('../../controllers/pago.controller');
 var Authorization = require('../../auth/authorization');
+const { getMontosaCobrarxConsumosClientes } = require('../../services/movimiento.service');
 
 // Endpoints usuarios
 router.post('/registration', UserController.createUser)
@@ -32,6 +33,8 @@ router.post('/agregarMovimiento', MovimientoController.agregarMovimiento)
 router.get('/getMovimientos', MovimientoController.getMovimientos)
 router.post('/getNMovimientos', MovimientoController.getNMovimientos)
 router.post('/getUMovimientos', MovimientoController.getUMovimientos)
+router.post('/getMontosaPagaraEstablecimientostcb',MovimientoController.getMontosaPagaraEstablecimientos)
+router.post('/getMontosaCobrarxConsumosClientestcb',MovimientoController.getMontosaCobrarxConsumosClientes)
 
 router.post('/UpdateidLiquidacionMovimiento', MovimientoController.UpdateidLiquidacionMovimiento)
 router.post('/UpdateidPagoMovimiento', MovimientoController.UpdateidPagoMovimiento)
