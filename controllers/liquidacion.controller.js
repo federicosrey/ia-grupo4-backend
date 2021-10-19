@@ -69,7 +69,8 @@ exports.getLiquidaciones = async function (req, res, next) {
 
 exports.UpdateidCobroLiquidacion = async function (req, res, next) {
 
-    var idLiquidacion = req.body.idLiquidacion;
+    var 
+    idLiquidacion = req.body.idLiquidacion;
     var idCobro = req.body.idCobro;
     
     try {
