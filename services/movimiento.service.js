@@ -15,9 +15,6 @@ exports.asignarTarjeta = async function (userTarjeta) {
 
     try {
         const usuario =  await User.findOne({dni:DNI});
-        //const tarjetas = usuario.tarjetas;
-        //console.log("es array ",tarjetas);
-        //usuario = await User.find({dni: DNI});
         const t = await Tarjeta.findOne({descripcion:tarjeta});
 
         usuario.tarjetas.push({
@@ -36,11 +33,6 @@ exports.asignarTarjeta = async function (userTarjeta) {
     } catch (e) {
         throw Error("Error al encontrar al usuario")
     }
-    /* if (!usuario) {
-        return false;
-    } */
-    
-    
 }
 
 //Agrego movimiento
@@ -200,8 +192,6 @@ exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
         limit
     }
     try {
-        //var movimientos = await Movimiento.find();
-        
         var movimientos = await Movimiento.aggregate([
             {
                 $match:
@@ -212,9 +202,8 @@ exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
             {
                 $group:
                 {
-
                     _id: { dniNegocio: "$dniNegocio"},  
-                    //mov: {$addToSet: "$_id"},                  
+                    mov: {$addToSet: "$_id"},                  
                     total: { $sum: "$monto" }
                 }
             }

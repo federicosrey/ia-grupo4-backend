@@ -127,7 +127,8 @@ exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) 
             {
                 $group:
                 {
-                    liq:{dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta", total: "$total"},
+                    _id:{dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta", total: "$total"},
+                    mov: {$addToSet: "$_id"}
                 }
             }
         ])

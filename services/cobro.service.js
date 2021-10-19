@@ -28,16 +28,7 @@ exports.asignarTarjeta = async function (userTarjeta) {
             fechaVencimiento: Date.now(),
             fechaCierre: Date.now()
         })
-        
-
-        /* var usuario.tarjetas = [{
-            idTipoTarjeta: 1,
-            numero: "777",
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()+30
-        }]*/
-        
-        
+         
         var asignartarjeta = await usuario.save(); 
         
         

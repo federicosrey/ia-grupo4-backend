@@ -22,20 +22,35 @@
 "produces": ["application/json"],
 
 "paths": {
-    "/api/users/tusuarios": {
+    "/api/users/getMontosaPagaraEstablecimientostcb": {
       "get": {
         "tags": ["Users"],
-        "summary": "Get all users in system",
+        "summary": "Los montos a pagar a sus establecimientos por los consumos realizados por sus clientes",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Los montos a pagar a sus establecimientos por los consumos realizados por sus clientes",
             "schema": {
               "$ref": "#/definitions/Users"
             }
           }
         }
       }
-    }
+    },
+    "/api/users/getMontosaCobrarxConsumosClientestcb": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Los montos a cobrar por los consumos de sus clientes",
+          "responses": {
+            "200": {
+              "description": "Los montos a cobrar por los consumos de sus clientes",
+              "schema": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          }
+        }
+      }
+
   },
   "definitions": {
     "User": {
