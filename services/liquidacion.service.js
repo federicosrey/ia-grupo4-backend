@@ -4,6 +4,7 @@ var Movimiento = require('../models/Movimiento.model');
 var Liquidacion = require('../models/Liquidacion.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+const Liquidaciones = require('../models/Liquidacion.model');
 
 _this = this
 
@@ -108,4 +109,35 @@ exports.UpdateidCobroLiquidacion = async function (idLiquidacion, idCobro) {
     }
 }
 
+exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) {
 
+    var options = {
+        page,
+        limit
+    }
+    
+    try {
+        var liquidaciones = await Liquidaciones.aggregate([
+            {
+                $match:
+                {
+                    idCobro:"0"
+                }
+            },
+            {
+                $group:
+                {
+                    liq:{dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta", total: "$total"},
+                }
+            }
+        ])
+    
+    /*try {
+        var liquidacion = await Liquidacion.paginate(query,options)*/
+
+        return liquidaciones;
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}

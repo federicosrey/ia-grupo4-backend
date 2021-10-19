@@ -29,8 +29,8 @@ router.post('/agregarMovimiento', MovimientoController.agregarMovimiento)
 router.get('/getMovimientos', MovimientoController.getMovimientos)
 router.post('/getNMovimientos', MovimientoController.getNMovimientos)
 router.post('/getUMovimientos', MovimientoController.getUMovimientos)
-router.post('/getMontosaPagaraEstablecimientostcb',MovimientoController.getMontosaPagaraEstablecimientos)
-router.post('/getMontosaCobrarxConsumosClientestcb',MovimientoController.getMontosaCobrarxConsumosClientes)
+router.get('/getMontosaPagaraEstablecimientostcb',MovimientoController.getMontosaPagaraEstablecimientos)
+//router.post('/getMontosaCobrarxConsumosClientestcb',MovimientoController.getMontosaCobrarxConsumosClientes)
 router.post('/UpdateidLiquidacionMovimiento', MovimientoController.UpdateidLiquidacionMovimiento)
 router.post('/UpdateidPagoMovimiento', MovimientoController.UpdateidPagoMovimiento)
 
@@ -38,6 +38,7 @@ router.post('/UpdateidPagoMovimiento', MovimientoController.UpdateidPagoMovimien
 router.post('/postLiquidaciones', LiquidacionController.postLiquidaciones)
 router.post('/getLiquidaciones', LiquidacionController.getLiquidaciones)
 router.post('/UpdateidCobroLiquidacion', LiquidacionController.UpdateidCobroLiquidacion)
+router.get('/getMontosaCobrarxConsumosClientestcb', LiquidacionController.getMontosaCobrarxConsumosClientes)
 
 //Endpoint Cobros
 router.post('/agregarCobro', CobroController.agregarCobro)

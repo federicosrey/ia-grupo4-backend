@@ -27,16 +27,7 @@ exports.asignarTarjeta = async function (userTarjeta) {
             fechaVencimiento: Date.now(),
             fechaCierre: Date.now()
         })
-        
-
-        /* var usuario.tarjetas = [{
-            idTipoTarjeta: 1,
-            numero: "777",
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()+30
-        }]*/
-        
-        
+           
         var asignartarjeta = await usuario.save(); 
         
         
@@ -211,7 +202,23 @@ exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
     try {
         //var movimientos = await Movimiento.find();
         
-        var movimientos = await Movimiento.paginate(query,options)
+        var movimientos = await Movimiento.aggregate([
+            {
+                $match:
+                {
+                   idPago:"0"
+                }
+            },
+            {
+                $group:
+                {
+
+                    _id: { dniNegocio: "$dniNegocio"},  
+                    //mov: {$addToSet: "$_id"},                  
+                    total: { $sum: "$monto" }
+                }
+            }
+        ])
 
         return movimientos;
 
@@ -220,7 +227,7 @@ exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
         throw Error('Error en el paginado de movimientos');
     }
 }
-
+/*
 exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) {
 
     var options = {
@@ -240,4 +247,4 @@ exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) 
     }
 }
 
-
+*/

@@ -49,15 +49,10 @@ exports.getLiquidaciones = async function (req, res, next) {
         });
   
       else
-  
         return res.status(200).json({
-  
           status: 200,
-  
           data: liquidaciones,
-  
           message: "Empresa por ID recuperada exitosamente",
-  
         });
   
     } catch (e) {
@@ -84,4 +79,18 @@ exports.UpdateidCobroLiquidacion = async function (req, res, next) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "movimiento no pudo generarse" })
     }
+}
+
+exports.getMontosaCobrarxConsumosClientes = async function (req, res, next) {
+
+  var page = req.query.page ? req.query.page : 1
+  var limit = req.query.limit ? req.query.limit : 1000;
+    
+try {
+  var liquidaciones = await liquidacionService.getMontosaCobrarxConsumosClientes({}, page, limit)
+  return res.status(200).json({ status: 200, data: liquidaciones, message: "Liquidaciones recuperadas exitosamente" });
+} catch (e) {
+
+  return res.status(400).json({ status: 400, message: e.message });
+}
 }
