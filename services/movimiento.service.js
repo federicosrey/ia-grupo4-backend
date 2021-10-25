@@ -38,17 +38,25 @@ exports.asignarTarjeta = async function (userTarjeta) {
 //Agrego movimiento
 exports.agregarMovimiento = async function (movimiento) {    
 
-    var nuevoMovimiento = new Movimiento({
-        fecha: Date.now(),
-        cuilUsuario: movimiento.cuilUsuario,
-        cuitNegocio: movimiento.cuitNegocio,
-        numeroTarjeta: movimiento.numeroTarjeta, 
-        monto: movimiento.monto,
-        idLiquidacion: 0,
-        idPago: 0,
-    })
+    
 
     try {
+        var cuilUsuario = movimiento.cuilUsuario
+
+        var cuilcuit = await User.findOne({cuilcuit:cuilUsuario});
+
+        if (Movimiento.cuilUsuario==cuilcuit) throw Error ("Cuil/Cuit invalido")
+        
+        var nuevoMovimiento = new Movimiento({
+            fecha: Date.now(),
+            cuilUsuario: movimiento.cuilUsuario,
+            cuitNegocio: movimiento.cuitNegocio,
+            numeroTarjeta: movimiento.numeroTarjeta, 
+            monto: movimiento.monto,
+            idLiquidacion: 0,
+            idPago: 0,
+        })
+        
         var movimientoGuardado = await nuevoMovimiento.save();
         var token = jwt.sign({
             id: movimientoGuardado._id

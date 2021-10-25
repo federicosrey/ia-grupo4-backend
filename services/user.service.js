@@ -103,10 +103,10 @@ exports.loginUser = async function (user) {
 
     try {
 
-        var _details = await User.findOne({
-            email: user.email
-        });
+        var _details = await User.findOne({email: user.email});
+
         var passwordIsValid = bcrypt.compareSync(user.password, _details.password);
+        
         if (!passwordIsValid) throw Error("Usuario/Contraseña invalido")
 
         var token = jwt.sign({
