@@ -10,7 +10,7 @@ var CobroSchema = new mongoose.Schema({
         type: Number
     },
     fecha: Date,
-    dniUsuario: Number, 
+    cuilcuitUsuario: Number, 
     total: Number
 })
 

@@ -72,7 +72,7 @@ El backend tiene configurado los siguientes endpoints :
  * name: String
  * lastname: String
  * email: String
- * dni: String
+ * cuilcuit: String
  * password: String
  * root: String
  * date: Date
@@ -86,7 +86,7 @@ El backend tiene configurado los siguientes endpoints :
 <img src="https://i.ibb.co/jTgLzzP/traerusuarios.png"/>
 
 <b><p>Actualizar Usuario (/actualizacion)</b></p>
-<p>Se utiliza para actualizar los usuarios de acceso a la aplicacion, la clave del usuario es el DNI</p>
+<p>Se utiliza para actualizar los usuarios de acceso a la aplicacion, la clave del usuario es el cuilcuit</p>
 <p>Metodo : PUT</p>
 
 Campos actualizables

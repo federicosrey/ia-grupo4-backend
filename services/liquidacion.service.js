@@ -11,20 +11,20 @@ _this = this
 // Asigno tarjeta
 exports.asignarTarjeta = async function (userTarjeta) {
 
-    var DNI = userTarjeta.dni
+    var cuilcuit = userTarjeta.cuilcuit
     var tarjeta = userTarjeta.tarjeta
 
     try {
-        const usuario =  await User.findOne({dni:DNI});
+        const usuario =  await User.findOne({cuilcuit:cuilcuit});
         //const tarjetas = usuario.tarjetas;
         //console.log("es array ",tarjetas);
-        //usuario = await User.find({dni: DNI});
+        //usuario = await User.find({cuilcuit: cuilcuit});
         const t = await Tarjeta.findOne({descripcion:tarjeta});
 
         usuario.tarjetas.push({
             descripcion: t.descripcion,
             limite: t.limite,
-            numero: '6321 4456 '.concat(' ',usuario.dni),
+            numero: '6321 4456 '.concat(' ',usuario.cuilcuit),
             fechaVencimiento: Date.now(),
             fechaCierre: Date.now()
         })
@@ -59,7 +59,7 @@ exports.agregarLiquidacion = async function (liquidacion) {
     var nuevaLiquidacion = new Liquidacion({
         idCobro: liquidacion.idCobro,
         fecha: liquidacion.fecha,
-        dniUsuario: liquidacion.dniUsuario,
+        cuilUsuario: liquidacion.cuilUsuario,
         numeroTarjeta: liquidacion.numeroTarjeta, 
         total: liquidacion.total,
     })
@@ -127,7 +127,7 @@ exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) 
             {
                 $group:
                 {
-                    _id:{dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta", total: "$total"},
+                    _id:{cuilUsuario: "$cuilUsuario", numeroTarjeta: "$numeroTarjeta", total: "$total"},
                     mov: {$addToSet: "$_id"}
                 }
             }

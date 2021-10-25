@@ -7,7 +7,7 @@ exports.postLiquidaciones = async function (req, res, next) {
      var liquidacion = {
         idCobro: 0,
         fecha: Date.now(),
-        dniUsuario: req.body.dniUsuario,
+        cuilUsuario: req.body.cuilUsuario,
         numeroTarjeta: req.body.numerotarjeta, 
         total: req.body.total,
     } 
@@ -29,7 +29,7 @@ exports.getLiquidaciones = async function (req, res, next) {
     
     var filtro = {
 
-        dniUsuario: req.body.dniUsuario,
+        cuilUsuario: req.body.cuilUsuario,
     
       };
 

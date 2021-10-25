@@ -29,7 +29,7 @@ exports.createUser = async function (user) {
         name: user.name,
         lastname: user.lastname,
         email: user.email,
-        dni: user.dni,
+        cuilcuit: user.cuilcuit,
         root: user.root,
         date: new Date(),
         password: hashedPassword,
@@ -54,7 +54,7 @@ exports.createUser = async function (user) {
 // Actualizo usuarios
 exports.updateUser = async function (user) {
 
-    var ids = { dni: user.dni }
+    var ids = { cuilcuit: user.cuilcuit }
 
     try {
         var oldUser = await User.findOne(ids);
@@ -68,7 +68,7 @@ exports.updateUser = async function (user) {
     oldUser.name = user.name
     oldUser.lastname = user.lastname
     oldUser.email = user.email
-    oldUser.dni = user.dni
+    oldUser.cuilcuit = user.cuilcuit
     oldUser.password = hashedPassword
     oldUser.root = user.root
     oldUser.nrotarjeta = user.nrotarjeta

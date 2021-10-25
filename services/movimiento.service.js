@@ -10,17 +10,17 @@ _this = this
 // Asigno tarjeta
 exports.asignarTarjeta = async function (userTarjeta) {
 
-    var DNI = userTarjeta.dni
+    var cuilcuit = userTarjeta.cuilcuit
     var tarjeta = userTarjeta.tarjeta
 
     try {
-        const usuario =  await User.findOne({dni:DNI});
+        const usuario =  await User.findOne({cuilcuit:cuilcuit});
         const t = await Tarjeta.findOne({descripcion:tarjeta});
 
         usuario.tarjetas.push({
             descripcion: t.descripcion,
             limite: t.limite,
-            numero: '6321 4456 '.concat(' ',usuario.dni),
+            numero: '6321 4456 '.concat(' ',usuario.cuilcuit),
             fechaVencimiento: Date.now(),
             fechaCierre: Date.now()
         })
@@ -40,8 +40,8 @@ exports.agregarMovimiento = async function (movimiento) {
 
     var nuevoMovimiento = new Movimiento({
         fecha: Date.now(),
-        dniUsuario: movimiento.dniUsuario,
-        dniNegocio: movimiento.dniNegocio,
+        cuilUsuario: movimiento.cuilUsuario,
+        cuitNegocio: movimiento.cuitNegocio,
         numeroTarjeta: movimiento.numeroTarjeta, 
         monto: movimiento.monto,
         idLiquidacion: 0,
@@ -151,7 +151,7 @@ exports.getMovimientos = async function (query, page, limit) {
             {
                 $group:
                 {
-                    _id: { dniUsuario: "$dniUsuario", numeroTarjeta: "$numeroTarjeta" },  
+                    _id: { cuilUsuario: "$cuilUsuario", numeroTarjeta: "$numeroTarjeta" },  
                     mov: {$addToSet: "$_id"},                  
                     total: { $sum: "$monto" }
                 }
@@ -202,7 +202,7 @@ exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
             {
                 $group:
                 {
-                    _id: { dniNegocio: "$dniNegocio"},  
+                    _id: { cuitNegocio: "$cuitNegocio"},  
                     mov: {$addToSet: "$_id"},                  
                     total: { $sum: "$monto" }
                 }

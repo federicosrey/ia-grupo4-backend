@@ -11,20 +11,20 @@ _this = this
 // Asigno tarjeta
 exports.asignarTarjeta = async function (userTarjeta) {
 
-    var DNI = userTarjeta.dni
+    var cuilcuit = userTarjeta.cuilcuit
     var tarjeta = userTarjeta.tarjeta
 
     try {
-        const usuario =  await User.findOne({dni:DNI});
+        const usuario =  await User.findOne({cuilcuit:cuilcuit});
         //const tarjetas = usuario.tarjetas;
         //console.log("es array ",tarjetas);
-        //usuario = await User.find({dni: DNI});
+        //usuario = await User.find({cuilcuit: cuilcuit});
         const t = await Tarjeta.findOne({descripcion:tarjeta});
 
         usuario.tarjetas.push({
             descripcion: t.descripcion,
             limite: t.limite,
-            numero: '6321 4456 '.concat(' ',usuario.dni),
+            numero: '6321 4456 '.concat(' ',usuario.cuilcuit),
             fechaVencimiento: Date.now(),
             fechaCierre: Date.now()
         })
@@ -49,7 +49,7 @@ exports.agregarCobro = async function (cobro) {
 
     var nuevoCobro = new Cobro({
         fecha: cobro.fecha,
-        dniUsuario: cobro.dniUsuario, 
+        cuilUsuario: cobro.cuilUsuario, 
         total: cobro.total
     })
 

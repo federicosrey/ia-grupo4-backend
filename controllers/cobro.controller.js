@@ -6,7 +6,7 @@ exports.agregarCobro = async function (req, res, next) {
 
     var cobro = {
         fecha: Date.now(),
-        dniUsuario: req.body.dniUsuario, 
+        cuilUsuario: req.body.cuilUsuario, 
         total: req.body.total
     }
     try {

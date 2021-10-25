@@ -24,7 +24,7 @@ exports.createUser = async function (req, res, next) {
         email: req.body.email,
         password: req.body.password,
         lastname: req.body.lastname,
-        dni: req.body.dni,
+        cuilcuit: req.body.cuilcuit,
         root: req.body.root,
         nrotarjeta: req.body.nrotarjeta
     }
@@ -40,15 +40,15 @@ exports.createUser = async function (req, res, next) {
 // Actualizacion de usuarios
 exports.updateUser = async function (req, res, next) {
 
-    if (!req.body.dni) {
-        return res.status(400).json({ status: 400., message: "DNI debe estar presente" })
+    if (!req.body.cuilcuit) {
+        return res.status(400).json({ status: 400., message: "cuilcuit debe estar presente" })
     }
     var User = {
 
         name: req.body.name ? req.body.name : null,
         lastname: req.body.lastname ? req.body.lastname : null,
         email: req.body.email ? req.body.email : null,
-        dni: req.body.dni ? req.body.dni : null,
+        cuilcuit: req.body.cuilcuit ? req.body.cuilcuit : null,
         password: req.body.password ? req.body.password : null,
         root: req.body.root ? req.body.root : null,
         nrotarjeta: req.body.nrotarjeta ? req.body.nrotarjeta : null
@@ -97,14 +97,14 @@ exports.getInfoUsuario = async function (req, res, next) {
     
     var filtro = {
 
-        dni: req.body.dniUsuario,
+        cuilcuit: req.body.cuilUsuario,
     
       };
 
 
     try {
         var liquidaciones = await UserService.getInfoUsuario(filtro, page, limit)
-        if (liquidaciones.dni === "0")
+        if (liquidaciones.cuilcuit === "0")
 
         return res.status(201).json({
   

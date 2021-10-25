@@ -7,8 +7,8 @@ _this = this;
 exports.agregarMovimiento = async function (req, res, next) {
 
     var movimiento = {
-        dniUsuario: req.body.dniusuario,
-        dniNegocio: req.body.dninegocio,
+        cuilUsuario: req.body.cuilUsuario,
+        cuitNegocio: req.body.cuitNegocio,
         numeroTarjeta: req.body.numerotarjeta,
         monto: req.body.monto
     }
@@ -42,14 +42,14 @@ exports.getUMovimientos = async function (req, res, next) {
     
     var filtro = {
 
-        dniUsuario: req.body.dniUsuario,
+        cuilUsuario: req.body.cuilUsuario,
     
     };
 
 
     try {
         var liquidaciones = await movimientoService.getUMovimientos(filtro, page, limit)
-        if (liquidaciones.dniUsuario === 0)
+        if (liquidaciones.cuilUsuario === 0)
 
         return res.status(201).json({
   
@@ -90,14 +90,14 @@ exports.getNMovimientos = async function (req, res, next) {
     
     var filtro = {
 
-        dniNegocio: req.body.dniNegocio,
+        cuitNegocio: req.body.cuitNegocio,
     
     };
 
 
     try {
         var liquidaciones = await movimientoService.getNMovimientos(filtro, page, limit)
-        if (liquidaciones.dniUsuario === 0)
+        if (liquidaciones.cuilUsuario === 0)
 
         return res.status(201).json({
   
@@ -182,16 +182,16 @@ try {
     
     var filtro = {
 
-        dniUsuario: req.body.dniUsuario,
+        cuilUsuario: req.body.cuilUsuario,
     };
     try {
         var movimientos = await movimientoService.getMontosaCobrarxConsumosClientes(filtro, page, limit)
-        if (!req.body.dniUsuario)
+        if (!req.body.cuilUsuario)
 
         return res.status(201).json({
           status: 201,
           //data: movimientos,
-          message: "No existe el usuario por DNI",
+          message: "No existe el usuario por cuilcuit",
         });
   
       else
@@ -199,7 +199,7 @@ try {
         return res.status(200).json({
           status: 200,
           data: movimientos,
-          message: "Usuario por DNI recuperado exitosamente",
+          message: "Usuario por cuilcuit recuperado exitosamente",
         });
   
     } catch (e) {

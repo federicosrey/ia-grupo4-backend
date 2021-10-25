@@ -5,7 +5,7 @@ _this = this;
 
 exports.asignarTarjeta = async function(req, res, next){
     var userTarjeta = {
-        dni: req.body.dni,
+        cuilcuit: req.body.cuilcuit,
         tarjeta: req.body.tarjeta
     }
 

@@ -51,15 +51,15 @@ exports.agregarTarjeta = async function (req, res, next) {
 // Actualizacion de usuarios
 exports.updateUser = async function (req, res, next) {
 
-    if (!req.body.dni) {
-        return res.status(400).json({ status: 400., message: "DNI debe estar presente" })
+    if (!req.body.cuilcuit) {
+        return res.status(400).json({ status: 400., message: "cuilcuit debe estar presente" })
     }
     var User = {
 
         name: req.body.name ? req.body.name : null,
         lastname: req.body.lastname ? req.body.lastname : null,
         email: req.body.email ? req.body.email : null,
-        dni: req.body.dni ? req.body.dni : null,
+        cuilcuit: req.body.cuilcuit ? req.body.cuilcuit : null,
         password: req.body.password ? req.body.password : null,
         root: req.body.root ? req.body.root : "N",
         nrotarjeta: req.body.nrotarjeta ? req.body.nrotarjeta : null
