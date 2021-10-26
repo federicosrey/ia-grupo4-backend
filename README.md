@@ -1,7 +1,7 @@
  ![version](https://img.shields.io/badge/version-1.0.0-blue.svg) 
 
 ## Presentacion del producto
-![Product Presentation Image](https://ibb.co/L1dDYfT)
+![Product Presentation Image](https://i.ibb.co/TtMDY5Q/gipeylogo.png)
 
 ## Descripcion
 
