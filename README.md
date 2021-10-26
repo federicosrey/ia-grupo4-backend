@@ -17,7 +17,7 @@
 * [Recursos](#Recursos)
 
 
-## Integrantes grupo 6
+## Integrantes grupo 4
 
 * Enriquez, Ariel Leandro               <b>Legajo : 1037578</b>
 * Rey, Federico Sebastian               <b>Legajo : 1084711</b>
