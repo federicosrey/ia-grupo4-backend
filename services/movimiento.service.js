@@ -37,33 +37,38 @@ exports.asignarTarjeta = async function (userTarjeta) {
 
 //Agrego movimiento
 exports.agregarMovimiento = async function (movimiento) {    
-
     
-
+    var nuevoMovimiento = null;
+    
+ 
     try {
-        var cuilUsuario = movimiento.cuilUsuario
-
-        var cuilcuit = await User.findOne({cuilcuit:cuilUsuario});
-
-        if (Movimiento.cuilUsuario==cuilcuit) throw Error ("Cuil/Cuit invalido")
         
-        var nuevoMovimiento = new Movimiento({
-            fecha: Date.now(),
-            cuilUsuario: movimiento.cuilUsuario,
-            cuitNegocio: movimiento.cuitNegocio,
-            numeroTarjeta: movimiento.numeroTarjeta, 
-            monto: movimiento.monto,
-            idLiquidacion: 0,
-            idPago: 0,
-        })
+        var usuario = await User.findOne({cuilcuit:movimiento.cuilUsuario});
+
+        usuario.tarjetas.forEach(t => {
+            if (t.numero == movimiento.numeroTarjeta){
+                nuevoMovimiento = new Movimiento({
+                    fecha: Date.now(),
+                    cuilUsuario: movimiento.cuilUsuario,
+                    cuitNegocio: movimiento.cuitNegocio,
+                    numeroTarjeta: movimiento.numeroTarjeta, 
+                    monto: movimiento.monto,
+                    idLiquidacion: 0,
+                    idPago: 0,
+                })
+            }
+        });
         
         var movimientoGuardado = await nuevoMovimiento.save();
-        var token = jwt.sign({
-            id: movimientoGuardado._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
+                /* var token = jwt.sign({
+                    id: movimientoGuardado._id
+                }, process.env.SECRET, {
+                    expiresIn: 86400 // expires in 24 hours
+                }); */
+        return movimientoGuardado;        
+        
+        
+        
     } catch (e) {
         console.log(e)
         throw Error("Error creando movimiento")
