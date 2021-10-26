@@ -60,7 +60,9 @@ El backend tiene configurado los siguientes endpoints :
  * numeroTarjeta: Integer
  * monto: Integer
 
-https://ia-grupo4-backend.herokuapp.com/endpoints/
+Tanto los endpoints como los modelos de datos se encuentran en swagger en el siguiente link
+
+- SWAGGER: <https://ia-grupo4-backend.herokuapp.com/endpoints/>
 
 ## Base de Datos
 
