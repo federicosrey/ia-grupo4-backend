@@ -25,7 +25,7 @@
 
 ## Tecnologia
 
-<img src="https://i.ibb.co/GR1VxFh/material-ui.png" width="64" height="64" /><img src="https://i.ibb.co/bsJMq4X/aps-504x498-small-transparent-pad-600x600-f8f8f8-u1.jpg" width="64" height="64" /><img src="https://i.ibb.co/dbtyXjf/Swagger-logo.png" width="64" height="64" />
+<img src="https://i.ibb.co/GR1VxFh/material-ui.png" width="64" height="64" /><img src="https://i.ibb.co/bsJMq4X/aps-504x498-small-transparent-pad-600x600-f8f8f8-u1.jpg" width="64" height="64" /><img src="https://i.ibb.co/PmgPXHF/download.png" width="64" height="64" />
 
 ## Instalacion
 
