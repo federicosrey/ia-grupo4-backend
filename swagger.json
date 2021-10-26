@@ -1,96 +1,85 @@
 {
   "swagger": "2.0",
   "info": {
+    "description": "Enpoints para uso externo. API Entidad de credito B realizada por el Grupo 4, Integracion de aplicaciones | Segundo Cuatrimestre 2021",
     "version": "1.0.0",
-    "title": "Swagger para API de Entidad de Credito",
-    "description": "Enpoints para uso externo. API de Entidad de Credito, Grupo 4 | Integracion de aplicaciones | Segundo Cuatrimestre 2021",
+    "title": "Swagger Entidad de credito B",
     "license": {
       "name": "UADE",
       "url": "https://www.uade.edu.ar/"
-  }
-},
-"host": "localhost:4000",
-"basePath": "/",
-"tags": [
-  {
-    "name": "Users",
-    "description": "API for users in the system"
-  }
-],
-"schemes": ["http"],
-"consumes": ["application/json"],
-"produces": ["application/json"],
-
-"paths": {
-    "/api/users/getMontosaPagaraEstablecimientostcb": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "Los montos a pagar a sus establecimientos por los consumos realizados por sus clientes",
-        "responses": {
-          "200": {
-            "description": "Los montos a pagar a sus establecimientos por los consumos realizados por sus clientes",
+    }
+  },
+  "host": "ia-grupo4-backend.herokuapp.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Cobro",
+      "description": "Endpoint para generacion de cobros"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/api/users/agregarMovimiento": {
+      "post": {
+        "tags": [
+          "Cobro"
+        ],
+        "summary": "Agrega un nuevo cobro",
+        "description": "",
+        "operationId": "agregarMovimiento",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Los cobros deben ser registrados como un movimiento",
+            "required": true,
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/Cobro"
             }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Movimiento generado exitosamente"
+          },
+          "400": {
+            "description": "No pudo cargarse el movimiento"
           }
         }
       }
-    },
-    "/api/users/getMontosaCobrarxConsumosClientestcb": {
-        "get": {
-          "tags": ["Users"],
-          "summary": "Los montos a cobrar por los consumos de sus clientes",
-          "responses": {
-            "200": {
-              "description": "Los montos a cobrar por los consumos de sus clientes",
-              "schema": {
-                "$ref": "#/definitions/Users"
-              }
-            }
-          }
-        }
-      }
-
+    }
   },
   "definitions": {
-    "User": {
-      "required": ["name", "_id", "companies"],
+    "Cobro": {
+      "type": "object",
       "properties": {
-        "_id": {
+        "cuilUsuario": {
+          "type": "string",
+          "description": "Minimo 11 caracteres valida contra los clientes registrados"
+        },
+        "cuitNegocio": {
+          "type": "string",
+          "description": "Minimo 11 caracteres valida contra los comercios registrados"
+        },
+        "numeroTarjeta": {
           "type": "integer",
-          "uniqueItems": true
+          "format": "int32",
+          "description": "16 caracteres valida contra las tarjetas de los clientes"
         },
-        "isPublic": {
-          "type": "boolean"
-        },
-        "name": {
-          "type": "string"
-        },
-        "books": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "amount": {
-                "type": "number"
-              }
-            }
-          }
-        },
-        "companies": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "monto": {
+          "type": "integer",
+          "format": "int32"
         }
       }
-    },
-    "Users": {
-      "type": "array",
-      "$ref": "#/definitions/User"
     }
   }
 }
