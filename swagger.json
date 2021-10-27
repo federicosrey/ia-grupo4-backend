@@ -71,8 +71,7 @@
           "description": "Minimo 11 caracteres valida contra los comercios registrados"
         },
         "numerotarjeta": {
-          "type": "integer",
-          "format": "int32",
+          "type": "string",
           "description": "16 caracteres valida contra las tarjetas de los clientes"
         },
         "monto": {
