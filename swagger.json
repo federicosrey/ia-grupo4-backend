@@ -70,14 +70,20 @@
           "type": "string",
           "description": "Minimo 11 caracteres valida contra los comercios registrados"
         },
-        "numeroTarjeta": {
+        "numerotarjeta": {
           "type": "integer",
           "format": "int32",
           "description": "16 caracteres valida contra las tarjetas de los clientes"
         },
         "monto": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "description": "El monto no debe ser superior al asignado"
+        },
+        "codigoseguridad": {
+          "type": "integer",
+          "format": "int32",
+          "description": "El codigo de seguridad de esa tarjeta en particular"
         }
       }
     }
