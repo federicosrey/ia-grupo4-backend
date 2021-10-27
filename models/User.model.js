@@ -7,7 +7,9 @@ var tarjetaSchema = new mongoose.Schema({
     limite: Number,
     numero: String,
     fechaVencimiento: Date,
-    fechaCierre: Date
+    fechaCierre: Date,
+    codigoSeguridad: Number, 
+    acumulado: Number
 })
 
 var UserSchema = new mongoose.Schema({

@@ -5,11 +5,12 @@ _this = this;
 
 // Agrega venta del negocio
 exports.agregarMovimiento = async function (req, res, next) {
-    console.log("req ", req);
+   
     var movimiento = {
         cuilUsuario: req.body.cuilUsuario,
         cuitNegocio: req.body.cuitNegocio,
         numeroTarjeta: req.body.numerotarjeta,
+        codigoSeguridad: req.body.codigoseguridad,
         monto: req.body.monto
     }
     try {
@@ -17,7 +18,7 @@ exports.agregarMovimiento = async function (req, res, next) {
         return res.status(201).json({ status:201, message: "Movimiento generado exitosamente" })
     } catch (e) {
         console.log(e)
-        return res.status(400).json({ status: 400, message: "No pudo cargarse el movimiento" })
+        return res.status(400).json({ status: 400, message: "No pudo cargarse el movimiento. Verifique que los datos sean los correctos." })
     }
 }
 

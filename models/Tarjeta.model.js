@@ -4,6 +4,7 @@ var mongoosePaginate = require('mongoose-paginate')
 var TarjetaSchema = new mongoose.Schema({
     descripcion: String,
     limite: Number,
+    prefijo: Number
 })
 
 TarjetaSchema.plugin(mongoosePaginate)

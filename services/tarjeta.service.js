@@ -44,19 +44,16 @@ exports.agregarTarjeta = async function (Tarjeta) {
     var nuevaTarjeta = new tarjeta({
         descripcion: Tarjeta.descripcion,
         limite: Tarjeta.limite,
+        prefijo: Tarjeta.prefijo
     })
 
     try {
         var TarjetaGuardada = await nuevaTarjeta.save();
-        var token = jwt.sign({
-            id: TarjetaGuardada._id
-        }, process.env.SECRET, {
-            expiresIn: 86400 // expires in 24 hours
-        });
-        return token;
+        
+        return TarjetaGuardada;
     } catch (e) {
         console.log(e)
-        throw Error("Error while Creating User")
+        throw Error("Error creando tarjeta")
     }
 }
 

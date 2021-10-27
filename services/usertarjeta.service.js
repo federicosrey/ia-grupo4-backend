@@ -12,37 +12,25 @@ exports.asignarTarjeta = async function (userTarjeta) {
     
     try {
         const usuario =  await User.findOne({_id:userTarjeta.cuilcuit});
-        //const tarjetas = usuario.tarjetas;
-        //console.log("es array ",tarjetas);
-        //usuario = await User.find({cuilcuit: cuilcuit});
-        console.log("asignacion 1: ",usuario);
+        console.log("servicio usuario", usuario);
         const t = await Tarjeta.findOne({descripcion:userTarjeta.tarjeta});
-        console.log("la tarjeta que encontro: ",t);
-
+        console.log("servicio tarjeta", t);
         usuario.tarjetas.push({
             descripcion: t.descripcion,
             limite: t.limite,
-            numero: '63214456'.concat('',usuario.cuilcuit),
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()
+            numero: t.prefijo.toString().concat('',usuario.cuilcuit),
+            fechaVencimiento: userTarjeta.fechaVencimiento,
+            fechaCierre: userTarjeta.fechaCierre,
+            codigoSeguridad: userTarjeta.codigoSeguridad,
+            acumulado : 0
         })
-        
-
-        /* var usuario.tarjetas = [{
-            idTipoTarjeta: 1,
-            numero: "777",
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()+30
-        }]*/
-        
-        console.log("asignacion: ",usuario);
+        console.log("completo info", usuario);
         var asignartarjeta = await usuario.save(); 
-        
-        console.log("dev ",asignartarjeta);
+        console.log("guardado", asignartarjeta);
         return asignartarjeta;
         
     } catch (e) {
-        throw Error("Error al encontrar al usuario")
+        throw Error("Error al asignar tarjeta")
     }
     /* if (!usuario) {
         return false;

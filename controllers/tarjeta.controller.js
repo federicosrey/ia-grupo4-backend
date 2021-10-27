@@ -38,6 +38,7 @@ exports.agregarTarjeta = async function (req, res, next) {
     var tarjeta = {
         descripcion: req.body.descripcion,
         limite: req.body.limite,
+        prefijo:req.body.prefijo
     }
     try {
         var agregandoTarjeta = await tarjetaService.agregarTarjeta(tarjeta)

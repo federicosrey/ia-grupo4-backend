@@ -7,71 +7,91 @@ const { getUsers } = require('./user.service');
 
 _this = this
 
-// Asigno tarjeta
-exports.asignarTarjeta = async function (userTarjeta) {
-
-    var cuilcuit = userTarjeta.cuilcuit
-    var tarjeta = userTarjeta.tarjeta
-
-    try {
-        const usuario =  await User.findOne({cuilcuit:cuilcuit});
-        const t = await Tarjeta.findOne({descripcion:tarjeta});
-
-        usuario.tarjetas.push({
-            descripcion: t.descripcion,
-            limite: t.limite,
-            numero: '6321 4456 '.concat(' ',usuario.cuilcuit),
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()
-        })
-           
-        var asignartarjeta = await usuario.save(); 
-        
-        
-        return asignartarjeta;
-        
-    } catch (e) {
-        throw Error("Error al encontrar al usuario")
-    }
-}
 
 //Agrego movimiento
 exports.agregarMovimiento = async function (movimiento) {    
     
     var nuevoMovimiento = null;
-    
+     
  
     try {
         
         var usuario = await User.findOne({cuilcuit:movimiento.cuilUsuario});
-
-        usuario.tarjetas.forEach(t => {
-            if (t.numero == movimiento.numeroTarjeta){
-                nuevoMovimiento = new Movimiento({
-                    fecha: Date.now(),
-                    cuilUsuario: movimiento.cuilUsuario,
-                    cuitNegocio: movimiento.cuitNegocio,
-                    numeroTarjeta: movimiento.numeroTarjeta, 
-                    monto: movimiento.monto,
-                    idLiquidacion: 0,
-                    idPago: 0,
-                })
+        console.log("usuario ", usuario);
+        var negocio = await User.findOne({cuilcuit:movimiento.cuitNegocio});
+        console.log("negocio ", negocio);
+        /* if(negocio != null){
+            if(movimiento.monto>0){
+                usuario.tarjetas.forEach(t => {
+                    if (t.numero == movimiento.numeroTarjeta){
+                        if(t.codigoSeguridad == movimiento.codigoSeguridad){
+                            if(movimiento.monto+t.acumulado<=t.limite){
+                                nuevoMovimiento = new Movimiento({
+                                    fecha: Date.now(),
+                                    cuilUsuario: movimiento.cuilUsuario,
+                                    cuitNegocio: movimiento.cuitNegocio,
+                                    numeroTarjeta: movimiento.numeroTarjeta, 
+                                    monto: movimiento.monto,
+                                    idLiquidacion: 0,
+                                    idPago: 0,
+                                })                        
+                            }                            
+                        }
+                    }
+                });
             }
-        });
-        
+            
+        } */
+
+        if(negocio != null){
+            console.log("negocio no es null ");
+            if(movimiento.monto>0){
+                console.log("tiene monto ");
+                for (const t of usuario.tarjetas) {
+                    if (t.numero == movimiento.numeroTarjeta){
+                        console.log("encontro tarjeta ");
+                        if(t.codigoSeguridad == movimiento.codigoSeguridad){
+                            console.log(" cod seg ok");
+                            var acum = +movimiento.monto+t.acumulado;
+                            console.log("acum ",acum);
+                            console.log("t.limite ",t.limite);
+                            var acum = movimiento.monto+t.acumulado;
+                            console.log("la condicion ", movimiento.monto+t.acumulado<=t.limite);
+                            if(+movimiento.monto+t.acumulado<=t.limite){
+                                console.log(" tengo limite ");
+                                nuevoMovimiento = new Movimiento({
+                                    fecha: Date.now(),
+                                    cuilUsuario: movimiento.cuilUsuario,
+                                    cuitNegocio: movimiento.cuitNegocio,
+                                    numeroTarjeta: movimiento.numeroTarjeta, 
+                                    monto: movimiento.monto,
+                                    idLiquidacion: 0,
+                                    idPago: 0,
+                                })  
+                                
+                                t.acumulado = +movimiento.monto+t.acumulado;                         
+                                    
+                                
+                                await usuario.save();
+
+                            }                            
+                        }
+                    }
+                }
+            }
+            
+        }
+        console.log(" nuevo movimiento ", nuevoMovimiento);
+             
         var movimientoGuardado = await nuevoMovimiento.save();
-                /* var token = jwt.sign({
-                    id: movimientoGuardado._id
-                }, process.env.SECRET, {
-                    expiresIn: 86400 // expires in 24 hours
-                }); */
+                
         return movimientoGuardado;        
         
         
         
     } catch (e) {
         console.log(e)
-        throw Error("Error creando movimiento")
+        throw Error("Error al crear movimiento")
     }
 }
 
