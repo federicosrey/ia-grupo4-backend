@@ -59,7 +59,7 @@ exports.agregarLiquidacion = async function (liquidacion) {
     var nuevaLiquidacion = new Liquidacion({
         idCobro: liquidacion.idCobro,
         fecha: liquidacion.fecha,
-        cuilUsuario: liquidacion.cuilUsuario,
+        cuilcuitUsuario: liquidacion.cuilUsuario,
         numeroTarjeta: liquidacion.numeroTarjeta, 
         total: liquidacion.total,
     })
