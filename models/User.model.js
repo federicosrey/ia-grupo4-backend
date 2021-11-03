@@ -21,7 +21,8 @@ var UserSchema = new mongoose.Schema({
     nrotarjeta: String,
     root: String,
     date: Date,    
-    tarjetas: [tarjetaSchema]
+    tarjetas: [tarjetaSchema],
+    dni: String
 })
 
 UserSchema.plugin(mongoosePaginate)

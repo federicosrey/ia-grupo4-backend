@@ -11,88 +11,105 @@ _this = this
 //Agrego movimiento
 exports.agregarMovimiento = async function (movimiento) {    
     
-    var nuevoMovimiento = null;
-     
+    var nuevoMovimiento = {
+        data: "",
+        status:400,
+        message: ""
+    }
+
+    console.log(movimiento.cuilUsuario);
  
-    try {
-        
-        var usuario = await User.findOne({cuilcuit:movimiento.cuilUsuario});
-        console.log("usuario ", usuario);
+    //try {
+       
+        if(movimiento.cuilUsuario.length==11){
+            var usuario = await User.findOne({cuilcuit:movimiento.cuilUsuario});
+        }else{
+            var usuario = await User.findOne({dni:movimiento.cuilUsuario});
+        }
+  
         var negocio = await User.findOne({cuilcuit:movimiento.cuitNegocio});
-        console.log("negocio ", negocio);
-        /* if(negocio != null){
-            if(movimiento.monto>0){
-                usuario.tarjetas.forEach(t => {
-                    if (t.numero == movimiento.numeroTarjeta){
-                        if(t.codigoSeguridad == movimiento.codigoSeguridad){
-                            if(movimiento.monto+t.acumulado<=t.limite){
-                                nuevoMovimiento = new Movimiento({
-                                    fecha: Date.now(),
-                                    cuilUsuario: movimiento.cuilUsuario,
-                                    cuitNegocio: movimiento.cuitNegocio,
-                                    numeroTarjeta: movimiento.numeroTarjeta, 
-                                    monto: movimiento.monto,
-                                    idLiquidacion: 0,
-                                    idPago: 0,
-                                })                        
-                            }                            
-                        }
-                    }
-                });
-            }
-            
-        } */
 
         if(negocio != null){
-            console.log("negocio no es null ");
-            if(movimiento.monto>0){
-                console.log("tiene monto ");
-                for (const t of usuario.tarjetas) {
-                    if (t.numero == movimiento.numeroTarjeta){
-                        console.log("encontro tarjeta ");
-                        if(t.codigoSeguridad == movimiento.codigoSeguridad){
-                            console.log(" cod seg ok");
-                            var acum = +movimiento.monto+t.acumulado;
-                            console.log("acum ",acum);
-                            console.log("t.limite ",t.limite);
-                            var acum = movimiento.monto+t.acumulado;
-                            console.log("la condicion ", movimiento.monto+t.acumulado<=t.limite);
-                            if(+movimiento.monto+t.acumulado<=t.limite){
-                                console.log(" tengo limite ");
-                                nuevoMovimiento = new Movimiento({
-                                    fecha: Date.now(),
-                                    cuilUsuario: movimiento.cuilUsuario,
-                                    cuitNegocio: movimiento.cuitNegocio,
-                                    numeroTarjeta: movimiento.numeroTarjeta, 
-                                    monto: movimiento.monto,
-                                    idLiquidacion: 0,
-                                    idPago: 0,
-                                })  
-                                
-                                t.acumulado = +movimiento.monto+t.acumulado;                         
-                                    
-                                
-                                await usuario.save();
+            if(usuario != null){
+                if(movimiento.monto>0){
+                    var nt = 0;
+                    var cs = 0;
+                    var li = 0;
+                    for (const t of usuario.tarjetas) {
+                        
+                        if (t.numero == movimiento.numeroTarjeta){
+                            nt = 1;
+                            if(t.codigoSeguridad == movimiento.codigoSeguridad){
+                                cs = 1;
+                                //var acum = +movimiento.monto+t.acumulado;
+                                //var acum = movimiento.monto+t.acumulado;
+                                if(+movimiento.monto+t.acumulado<=t.limite){
+                                    li = 1;
+                                    nuevoMovimiento = new Movimiento({
+                                        fecha: Date.now(),
+                                        cuilUsuario: usuario.cuilcuit,
+                                        cuitNegocio: movimiento.cuitNegocio,
+                                        numeroTarjeta: movimiento.numeroTarjeta, 
+                                        monto: movimiento.monto,
+                                        idLiquidacion: 0,
+                                        idPago: 0,
+                                    })  
+                            
+                                    t.acumulado = +movimiento.monto+t.acumulado;                         
+                                    await usuario.save();
 
-                            }                            
+                                    var movimientoGuardado = await nuevoMovimiento.save();
+                                    
+                                    nuevoMovimiento.data = movimientoGuardado._id;
+                                    nuevoMovimiento.status = 201;
+                                    nuevoMovimiento.message = "El pago se proceso correctamente";  
+                                }                            
+                            }
                         }
                     }
-                }
-            }
-            
+                    
+                    if(nt==0){                        
+                        nuevoMovimiento.data = null;
+                        nuevoMovimiento.status = 400;
+                        nuevoMovimiento.message = "Número de tarjeta incorrecto";                         
+                    }else{
+                        if(cs==0){
+                            nuevoMovimiento.data = null;
+                            nuevoMovimiento.status = 400;
+                            nuevoMovimiento.message = "Código de seguridad incorrecto";
+                        }else{
+                            if(li==0){
+                                nuevoMovimiento.data = null;
+                                nuevoMovimiento.status = 400;
+                                nuevoMovimiento.message = "El monto supera el límite disponible";
+                            }
+                        }
+                    }
+                }else{
+                    nuevoMovimiento.data = null;
+                    nuevoMovimiento.status = 400;
+                    nuevoMovimiento.message = "El monto debe ser mayor a 0";
+                }  
+            }else{
+                nuevoMovimiento.data = null;
+                nuevoMovimiento.status = 400;
+                nuevoMovimiento.message = "Cliente inexistente";
+            }     
+        }else{
+            nuevoMovimiento.data = null;
+            nuevoMovimiento.status = 400;
+            nuevoMovimiento.message = "Negocio inexistente";
         }
-        console.log(" nuevo movimiento ", nuevoMovimiento);
+        
              
-        var movimientoGuardado = await nuevoMovimiento.save();
-                
-        return movimientoGuardado;        
+        return nuevoMovimiento;      
         
         
         
-    } catch (e) {
-        console.log(e)
-        throw Error("Error al crear movimiento")
-    }
+    //} catch (e) {
+    //    console.log(e)
+    //    throw Error("Error al crear movimiento")
+    //}
 }
 
 exports.getMovimientosUsuario = async function (query, page, limit) {

@@ -7,19 +7,24 @@ _this = this;
 exports.agregarMovimiento = async function (req, res, next) {
    
     var movimiento = {
-        cuilUsuario: req.body.cuilUsuario,
+        cuilUsuario: req.body.dnicuilUsuario,
         cuitNegocio: req.body.cuitNegocio,
         numeroTarjeta: req.body.numerotarjeta,
         codigoSeguridad: req.body.codigoseguridad,
         monto: req.body.monto
     }
-    try {
+    //try {
         var agregandoMovimiento = await movimientoService.agregarMovimiento(movimiento)
-        return res.status(201).json({ status:201, message: "Movimiento generado exitosamente" })
-    } catch (e) {
-        console.log(e)
-        return res.status(400).json({ status: 400, message: "No pudo cargarse el movimiento. Verifique que los datos sean los correctos." })
-    }
+        //return res.status(201).json({ data: agregandoMovimiento, status:201, message: "Movimiento generado exitosamente" })
+        if(agregandoMovimiento.status==201){
+          return res.status(201).json({ data: agregandoMovimiento.data, status:agregandoMovimiento.status, message: agregandoMovimiento.message })
+        }else{
+          return res.status(400).json({ data: agregandoMovimiento.data, status:agregandoMovimiento.status, message: agregandoMovimiento.message })
+        }  
+    // } catch (e) {
+    //     console.log(e)
+    //     return res.status(400).json({ status: 400, message: "No pudo cargarse el movimiento. Verifique que los datos sean los correctos." })
+    // }
 }
 
 exports.getMovimientos = async function (req, res, next) {

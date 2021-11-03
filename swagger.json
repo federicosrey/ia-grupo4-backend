@@ -49,10 +49,39 @@
         ],
         "responses": {
           "201": {
-            "description": "Movimiento generado exitosamente"
+            "data": "String con el ID del movimiento generado",
+            "status": 201,
+            "message": "El pago se proceso correctamente"
           },
           "400": {
-            "description": "No pudo cargarse el movimiento"
+            "data": "null",
+            "status": 400,
+            "message": "Negocio inexistente"
+          },
+          "400": {
+            "data": "null",
+            "status": 400,
+            "message": "Cliente inexistente"
+          },
+          "400": {
+            "data": "null",
+            "status": 400,
+            "message": "El monto debe ser mayor a 0"
+          },
+          "400": {
+            "data": "null",
+            "status": 400,
+            "message": "Número de tarjeta incorrecto"
+          },
+          "400": {
+            "data": "null",
+            "status": 400,
+            "message": "Codigo de seguridad incorrecto"
+          },
+          "400": {
+            "data": "null",
+            "status": 400,
+            "message": "El monto supera el límite disponible"
           }
         }
       }
@@ -62,9 +91,9 @@
     "Cobro": {
       "type": "object",
       "properties": {
-        "cuilUsuario": {
+        "dnicuilUsuario": {
           "type": "string",
-          "description": "Minimo 11 caracteres valida contra los clientes registrados"
+          "description": "Se puede enviar tanto el DNI como el CUIL del usuario. "
         },
         "cuitNegocio": {
           "type": "string",
