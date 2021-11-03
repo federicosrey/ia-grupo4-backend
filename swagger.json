@@ -47,7 +47,7 @@
             }
           }
         ],
-        "responses (Las letras en los responses 400 no tomar en cuenta)": {
+        "responses": {
           "1) 201": {
             "data": "String con el ID del movimiento generado",
             "status": 201,
