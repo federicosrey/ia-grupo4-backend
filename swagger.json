@@ -53,32 +53,32 @@
             "status": 201,
             "message": "El pago se proceso correctamente"
           },
-          "400": {
+          "1) 400": {
             "data": "null",
             "status": 400,
             "message": "Negocio inexistente"
           },
-          "400": {
+          "2) 400": {
             "data": "null",
             "status": 400,
             "message": "Cliente inexistente"
           },
-          "400": {
+          "3) 400": {
             "data": "null",
             "status": 400,
             "message": "El monto debe ser mayor a 0"
           },
-          "400": {
+          "4) 400": {
             "data": "null",
             "status": 400,
             "message": "Número de tarjeta incorrecto"
           },
-          "400": {
+          "5) 400": {
             "data": "null",
             "status": 400,
             "message": "Codigo de seguridad incorrecto"
           },
-          "400": {
+          "6) 400": {
             "data": "null",
             "status": 400,
             "message": "El monto supera el límite disponible"
