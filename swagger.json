@@ -48,37 +48,37 @@
           }
         ],
         "responses (Las letras en los responses 400 no tomar en cuenta)": {
-          "201": {
+          "1) 201": {
             "data": "String con el ID del movimiento generado",
             "status": 201,
             "message": "El pago se proceso correctamente"
           },
-          "a400": {
+          "2) 400": {
             "data": "null",
             "status": 400,
             "message": "Negocio inexistente"
           },
-          "b400": {
+          "3) 400": {
             "data": "null",
             "status": 400,
             "message": "Cliente inexistente"
           },
-          "c400": {
+          "4) 400": {
             "data": "null",
             "status": 400,
             "message": "El monto debe ser mayor a 0"
           },
-          "d400": {
+          "5) 400": {
             "data": "null",
             "status": 400,
             "message": "Número de tarjeta incorrecto"
           },
-          "e400": {
+          "6) 400": {
             "data": "null",
             "status": 400,
             "message": "Codigo de seguridad incorrecto"
           },
-          "f400": {
+          "7) 400": {
             "data": "null",
             "status": 400,
             "message": "El monto supera el límite disponible"
