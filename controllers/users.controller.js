@@ -137,3 +137,18 @@ exports.getInfoUsuario = async function (req, res, next) {
     }
         
 }
+
+//devuelve las tarjetas de los usuarios que cierran hoy
+exports.getUserTarjetaFechaCierre = async function (req, res, next) {
+
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    try {
+        var movimientos = await movimientoService.getMovimientos(Date.now(), page, limit)
+        return res.status(200).json({ status: 200, data: movimientos, message: "movimientos recuperados exitosamente" });
+    } catch (e) {
+
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+}

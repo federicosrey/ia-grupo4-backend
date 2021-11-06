@@ -15,10 +15,10 @@ exports.asignarTarjeta = async function (userTarjeta) {
         console.log("servicio usuario", usuario);
         const t = await Tarjeta.findOne({descripcion:userTarjeta.tarjeta});
         console.log("servicio tarjeta", t);
-        usuario.tarjetas.push({
+        await usuario.tarjetas.push({
             descripcion: t.descripcion,
             limite: t.limite,
-            numero: t.prefijo.toString().concat('',usuario.cuilcuit),
+            numero: t.prefijo.toString().concat('',usuario.dni),
             fechaVencimiento: userTarjeta.fechaVencimiento,
             fechaCierre: userTarjeta.fechaCierre,
             codigoSeguridad: userTarjeta.codigoSeguridad,

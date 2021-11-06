@@ -6,8 +6,8 @@ var tarjetaSchema = new mongoose.Schema({
     descripcion: String,
     limite: Number,
     numero: String,
-    fechaVencimiento: Date,
-    fechaCierre: Date,
+    fechaVencimiento: String,
+    fechaCierre: String,
     codigoSeguridad: Number, 
     acumulado: Number
 })
@@ -20,7 +20,7 @@ var UserSchema = new mongoose.Schema({
     password: String,
     nrotarjeta: String,
     root: String,
-    date: Date,    
+    date: String,    
     tarjetas: [tarjetaSchema],
     dni: String
 })

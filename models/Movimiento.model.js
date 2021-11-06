@@ -10,7 +10,7 @@ var MovimientoSchema = new mongoose.Schema({
         primaryKey: true,
         type: Number
     },
-    fecha: Date,
+    fecha: String,
     cuilUsuario: {
         type: String,
         required: [true, 'CUIL requerido'],
@@ -21,6 +21,8 @@ var MovimientoSchema = new mongoose.Schema({
     monto: Number,
     idLiquidacion: String,
     idPago: String,
+    fechaCierre: String,
+    fechaVencimiento: String
 })
 
 MovimientoSchema.plugin(mongoosePaginate)

@@ -4,6 +4,7 @@ var Movimiento = require('../models/Movimiento.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const { getUsers } = require('./user.service');
+var moment = require('moment');
 
 _this = this
 
@@ -46,14 +47,19 @@ exports.agregarMovimiento = async function (movimiento) {
                                 if(+movimiento.monto+t.acumulado<=t.limite){
                                     li = 1;
                                     nuevoMovimiento = new Movimiento({
-                                        fecha: Date.now(),
+                                        //fecha: moment().format('DD/MM/YYYY'),
+                                        fecha: moment().format('YYYY-MM-DD'),
                                         cuilUsuario: usuario.cuilcuit,
                                         cuitNegocio: movimiento.cuitNegocio,
                                         numeroTarjeta: movimiento.numeroTarjeta, 
                                         monto: movimiento.monto,
                                         idLiquidacion: 0,
                                         idPago: 0,
+                                        fechaCierre: t.fechaCierre,
+                                        fechaVencimiento: t.fechaVencimiento,
                                     })  
+                                    // console.log(moment().format('DD/MM/YYYY'));
+                                    // console.log(moment().add(1,'months').format('DD/MM/YYYY'));
                             
                                     t.acumulado = +movimiento.monto+t.acumulado;                         
                                     await usuario.save();
@@ -182,39 +188,94 @@ exports.getUMovimientos = async function (query, page, limit) {
 }
 
 
-exports.getMovimientos = async function (query, page, limit) {
+// exports.getMovimientos = async function (query, page, limit) {
 
-    var options = {
-        page,
-        limit
-    }
-    try {
-        //var movimientos = await Movimiento.find();
+    
+//     try {
+//         var movimientos = await Movimiento.aggregate([
+//             {
+//                 $match:
+//                 {
+//                     idLiquidacion:"0",
+//                 }
+//             },
+//             {
+//                 $group:
+//                 {
+//                     _id: { cuilUsuario: "$cuilUsuario", numeroTarjeta: "$numeroTarjeta" },  
+//                     mov: {$addToSet: "$_id"},                  
+//                     total: { $sum: "$monto" }
+//                 }
+//             }
+//         ])
         
-        var movimientos = await Movimiento.aggregate([
-            {
-                $match:
-                {
-                   idLiquidacion:"0"
-                }
-            },
-            {
-                $group:
-                {
-                    _id: { cuilUsuario: "$cuilUsuario", numeroTarjeta: "$numeroTarjeta" },  
-                    mov: {$addToSet: "$_id"},                  
-                    total: { $sum: "$monto" }
-                }
+           
+
+
+//         return movimientos;
+
+//      } catch (e) {
+//          console.log("error servicio", e)
+//          throw Error('Error en el paginado de movimientos');
+//      }
+// }
+
+exports.getMovimientos = async function (query, page, limit) {
+    console.log("gola")
+    var losmo = await Movimiento.find({idLiquidacion:"0"});
+
+    console.log("losmo ",losmo);
+
+    var movimientos = new Array();
+
+   
+
+
+
+    
+
+    var encontro=0;
+
+    console.log(movimientos);
+    for (const lm of losmo){    
+        for (const m of movimientos){
+            if(m.cuilUsuario==lm.cuilUsuario){
+                if(m.numeroTarjeta==lm.numeroTarjeta){
+                    if(moment(lm.fecha).isSameOrBefore(lm.fechaCierre)){
+                        encontro=1;
+                        m.total +=lm.monto;
+                        m.mov.push(lm._id.toString());
+                    }    
+                }    
             }
-        ])
+        }
+        if(encontro==0){
+            if(moment(lm.fecha).isSameOrBefore(lm.fechaCierre)){
+                movimientos.push(
+                    { 
+                        cuilUsuario: lm.cuilUsuario,
+                        numeroTarjeta: lm.numeroTarjeta,
+                        mov: [lm._id.toString()],
+                        total: lm.monto,
+                        fechaVencimiento: lm.fechaVencimiento
+                    }
+                );
+            }            
+        }
+        encontro=0;
+    }    
+    
 
-        return movimientos;
+  
+        
+           
 
-    } catch (e) {
-        console.log("error servicio", e)
-        throw Error('Error en el paginado de movimientos');
-    }
+    console.log(movimientos);
+    return movimientos;
+
+     
 }
+
 
 exports.getNMovimientos = async function (query, page, limit) {
 
