@@ -249,7 +249,8 @@ exports.getMovimientos = async function (query, page, limit) {
                 }    
             }
         }
-        if(encontro==0){
+        console.log("encontro: ",encontro);
+        if(encontro===0){
             if(moment(lm.fecha).isSameOrBefore(lm.fechaCierre)){
                 movimientos.push(
                     { 
@@ -277,6 +278,8 @@ exports.getMovimientos = async function (query, page, limit) {
 }
 
 
+
+
 exports.getNMovimientos = async function (query, page, limit) {
 
     var options = {
@@ -296,36 +299,78 @@ exports.getNMovimientos = async function (query, page, limit) {
     }
 }
 
+// exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
+
+//     var options = {
+//         page,
+//         limit
+//     }
+//     try {
+//         var movimientos = await Movimiento.aggregate([
+//             {
+//                 $match:
+//                 {
+//                    idPago:"0"
+//                 }
+//             },
+//             {
+//                 $group:
+//                 {
+//                     _id: { cuitNegocio: "$cuitNegocio"},  
+//                     mov: {$addToSet: "$_id"},                  
+//                     total: { $sum: "$monto" }
+//                 }
+//             }
+//         ])
+
+//         return movimientos;
+
+//     } catch (e) {
+//         console.log("error servicio", e)
+//         throw Error('Error en el paginado de movimientos');
+//     }
+// }
+
 exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
+    
+    var losmo = await Movimiento.find({idPago:"0"});
 
-    var options = {
-        page,
-        limit
-    }
-    try {
-        var movimientos = await Movimiento.aggregate([
-            {
-                $match:
-                {
-                   idPago:"0"
-                }
-            },
-            {
-                $group:
-                {
-                    _id: { cuitNegocio: "$cuitNegocio"},  
-                    mov: {$addToSet: "$_id"},                  
-                    total: { $sum: "$monto" }
-                }
+    var movimientos = new Array();
+
+    var encontro=0;
+
+    for (const lm of losmo){    
+        for (const m of movimientos){
+            if(m.cuitNegocio==lm.cuitNegocio){
+                encontro=1;
+                m.total +=lm.monto;
+                m.mov.push(lm._id.toString());                
             }
-        ])
+        }
+        if(encontro==0){
+            
+                movimientos.push(
+                    { 
+                        cuitNegocio: lm.cuitNegocio,
+                        mov: [lm._id.toString()],
+                        total: lm.monto,
+                        fechaVencimiento: lm.fechaVencimiento
+                    }
+                );
+            
+        }
+        encontro=0;
+    }    
+    
 
-        return movimientos;
+  
+        
+           
 
-    } catch (e) {
-        console.log("error servicio", e)
-        throw Error('Error en el paginado de movimientos');
-    }
+    console.log(movimientos);
+    return movimientos;
+
+     
 }
 /*
 exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) {

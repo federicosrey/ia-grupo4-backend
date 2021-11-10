@@ -41,6 +41,7 @@ exports.getMovimientos = async function (req, res, next) {
     }
 }
 
+
 exports.getUMovimientos = async function (req, res, next) {
 
     var page = req.query.page ? req.query.page : 1
@@ -165,18 +166,18 @@ exports.UpdateidPagoMovimiento = async function (req, res, next) {
 }
 
 exports.getMontosaPagaraEstablecimientos = async function (req, res, next) {
- 
-    
-  var page = req.query.page ? req.query.page : 1
-  var limit = req.query.limit ? req.query.limit : 1000;
-    
-try {
-  var movimientos = await movimientoService.getMontosaPagaraEstablecimientos({}, page, limit)
-  return res.status(200).json({ status: 200, data: movimientos, message: "Liquidaciones recuperadas exitosamente" });
-} catch (e) {
 
-  return res.status(400).json({ status: 400, message: e.message });
-}
+    var page = req.query.page ? req.query.page : 1
+    var limit = req.query.limit ? req.query.limit : 1000;
+    
+    try {
+        var movimientos = await movimientoService.getMontosaPagaraEstablecimientos({}, page, limit)
+        return res.status(200).json({ status: 200, data: movimientos, message: "movimientos recuperados exitosamente" });
+    } catch (e) {
+
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+
 }
 
 
