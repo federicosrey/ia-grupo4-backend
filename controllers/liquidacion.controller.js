@@ -26,12 +26,28 @@ exports.getLiquidaciones = async function (req, res, next) {
 
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 1000;
-    
-    var filtro = {
 
-        cuilUsuario: req.body.cuilUsuario,
+    console.log("aca", req.body.cuilUsuario);
+
+    if(req.body.cuilUsuario){
+      var filtro = {
+
+        cuilcuitUsuario: req.body.cuilUsuario,
+        idCobro:0
     
       };
+
+    }else{
+      var filtro = {
+
+        idCobro:0
+    
+      };
+    }
+
+    
+    
+    
 
 
     try {
