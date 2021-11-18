@@ -9,7 +9,7 @@ var PagoSchema = new mongoose.Schema({
         primaryKey: true,
         type: Number
     },
-    fecha: Date,
+    fecha: String,
     cuitNegocio: Number, 
     total: Number
 })

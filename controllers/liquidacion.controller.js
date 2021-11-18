@@ -1,12 +1,13 @@
 var liquidacionService = require('../services/liquidacion.service');
 _this = this;
+var moment = require('moment');
 
 // Agrega venta del negocio
 exports.postLiquidaciones = async function (req, res, next) {
 
      var liquidacion = {
         idCobro: 0,
-        fecha: Date.now(),
+        fecha: moment().format('YYYY-MM-DD'),
         cuilUsuario: req.body.cuilUsuario,
         numeroTarjeta: req.body.numerotarjeta, 
         total: req.body.total,

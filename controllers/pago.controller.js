@@ -1,11 +1,12 @@
 var pagoService = require('../services/pago.service');
 _this = this;
+var moment = require('moment');
 
 // Agrega venta del negocio
 exports.agregarPago = async function (req, res, next) {
     
     var pago = {
-        fecha: Date.now(),
+        fecha: moment().format('YYYY-MM-DD'),
         cuitNegocio: req.body.cuitNegocio, 
         total: req.body.total
     }

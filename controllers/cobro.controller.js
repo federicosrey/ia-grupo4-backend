@@ -1,11 +1,12 @@
 var cobroService = require('../services/cobro.service');
 _this = this;
+var moment = require('moment');
 
 // Agrega venta del negocio
 exports.agregarCobro = async function (req, res, next) {
 
     var cobro = {
-        fecha: Date.now(),
+        fecha: moment().format('YYYY-MM-DD'),
         cuilUsuario: req.body.cuilUsuario, 
         total: req.body.total
     }
