@@ -15,7 +15,8 @@ exports.agregarPago = async function (pago) {
     var nuevoPago = new Pago({
         fecha: pago.fecha,
         cuitNegocio: pago.cuitNegocio, 
-        total: pago.total
+        total: pago.total,
+        idCobro: pago.idCobro
     })
 
     try {

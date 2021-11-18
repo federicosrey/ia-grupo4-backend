@@ -8,7 +8,8 @@ exports.agregarPago = async function (req, res, next) {
     var pago = {
         fecha: moment().format('YYYY-MM-DD'),
         cuitNegocio: req.body.cuitNegocio, 
-        total: req.body.total
+        total: req.body.total,
+        idCobro: 0
     }
     try {
         var agregandoPago = await pagoService.agregarPago(pago)
