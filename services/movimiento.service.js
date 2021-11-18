@@ -334,32 +334,32 @@ exports.getNMovimientos = async function (query, page, limit) {
 exports.getMontosaPagaraEstablecimientos = async function (query, page, limit) {
     
     var losmo = await Movimiento.find({idPago:"0"});
-
+        
     var movimientos = new Array();
 
     var encontro=0;
-
+    console.log("losm",losmo)
     for (const lm of losmo){    
-        for (const m of movimientos){
+        if(lm.idLiquidacion!="0")  {
+        for (const m of movimientos){                
             if(m.cuitNegocio==lm.cuitNegocio){
                 encontro=1;
                 m.total +=lm.monto;
                 m.mov.push(lm._id.toString());                
-            }
+            }                            
         }
         if(encontro==0){
-            
-                movimientos.push(
-                    { 
-                        cuitNegocio: lm.cuitNegocio,
-                        mov: [lm._id.toString()],
-                        total: lm.monto,
-                        fechaVencimiento: lm.fechaVencimiento
-                    }
-                );
-            
+            movimientos.push(
+            { 
+                cuitNegocio: lm.cuitNegocio,
+                mov: [lm._id.toString()],
+                total: lm.monto,
+                fechaVencimiento: lm.fechaVencimiento
+            }
+            );              
         }
         encontro=0;
+        }   
     }    
     
 

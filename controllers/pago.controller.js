@@ -12,7 +12,7 @@ exports.agregarPago = async function (req, res, next) {
     }
     try {
         var agregandoPago = await pagoService.agregarPago(pago)
-        return res.status(201).json({ data:agregandoPago, message: "Pago generado exitosamente" })
+        return res.status(201).json({ data:agregandoPago, status: 201, message: "Pago generado exitosamente" })
     } catch (e) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "pago no pudo generarse" })
@@ -30,5 +30,19 @@ exports.getPagos = async function (req, res, next) {
     } catch (e) {
 
         return res.status(400).json({ status: 400, message: e.message });
+    }
+}
+
+exports.UpdateidCobroPago = async function (req, res, next) {
+
+    var idPago = req.body.idPago;
+    var idCobro = req.body.idCobro;
+    
+    try {
+        var updatePago = await pagoService.UpdateidCobroPago(idPago,idCobro)
+        return res.status(201).json({ updatePago, message: "update idCobro en pago generado exitosamente" })
+    } catch (e) {
+        console.log(e)
+        return res.status(400).json({ status: 400, message: "update idCobro en pago no pudo generarse" })
     }
 }

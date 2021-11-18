@@ -8,50 +8,6 @@ var jwt = require('jsonwebtoken');
 
 _this = this
 
-// Asigno tarjeta
-exports.asignarTarjeta = async function (userTarjeta) {
-
-    var cuilcuit = userTarjeta.cuilcuit
-    var tarjeta = userTarjeta.tarjeta
-
-    try {
-        const usuario =  await User.findOne({cuilcuit:cuilcuit});
-        //const tarjetas = usuario.tarjetas;
-        //console.log("es array ",tarjetas);
-        //usuario = await User.find({cuilcuit: cuilcuit});
-        const t = await Tarjeta.findOne({descripcion:tarjeta});
-
-        usuario.tarjetas.push({
-            descripcion: t.descripcion,
-            limite: t.limite,
-            numero: '6321 4456 '.concat(' ',usuario.cuilcuit),
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()
-        })
-        
-
-        /* var usuario.tarjetas = [{
-            idTipoTarjeta: 1,
-            numero: "777",
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()+30
-        }]*/
-        
-        
-        var asignartarjeta = await usuario.save(); 
-        
-        
-        return asignartarjeta;
-        
-    } catch (e) {
-        throw Error("Error al encontrar al usuario")
-    }
-    /* if (!usuario) {
-        return false;
-    } */
-    
-    
-}
 
 //Agrego movimiento
 exports.agregarPago = async function (pago) {    
@@ -79,8 +35,25 @@ exports.getPagos = async function (query, page, limit) {
         limit
     }
     try {
-        var pagos = await Pago.find();
+        
+        var pagos = await Pago.paginate(query,options)
         return pagos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de pagos');
+    }
+}
+
+exports.UpdateidCobroPago = async function (idPago, idCobro) {
+    
+    
+    try {
+        var pago = await Pago.findOne({_id: idPago}); 
+       
+        pago.idCobro = idCobro
+        var pagosaved = await pago.save();
+        return pagosaved;
 
     } catch (e) {
         console.log("error servicio", e)

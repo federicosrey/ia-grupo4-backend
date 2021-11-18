@@ -11,7 +11,8 @@ var PagoSchema = new mongoose.Schema({
     },
     fecha: String,
     cuitNegocio: Number, 
-    total: Number
+    total: Number,
+    idCobro: String,
 })
 
 PagoSchema.plugin(mongoosePaginate)

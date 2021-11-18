@@ -8,50 +8,7 @@ const Liquidaciones = require('../models/Liquidacion.model');
 
 _this = this
 
-// Asigno tarjeta
-exports.asignarTarjeta = async function (userTarjeta) {
 
-    var cuilcuit = userTarjeta.cuilcuit
-    var tarjeta = userTarjeta.tarjeta
-
-    try {
-        const usuario =  await User.findOne({cuilcuit:cuilcuit});
-        //const tarjetas = usuario.tarjetas;
-        //console.log("es array ",tarjetas);
-        //usuario = await User.find({cuilcuit: cuilcuit});
-        const t = await Tarjeta.findOne({descripcion:tarjeta});
-
-        usuario.tarjetas.push({
-            descripcion: t.descripcion,
-            limite: t.limite,
-            numero: '6321 4456 '.concat(' ',usuario.cuilcuit),
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()
-        })
-        
-
-        /* var usuario.tarjetas = [{
-            idTipoTarjeta: 1,
-            numero: "777",
-            fechaVencimiento: Date.now(),
-            fechaCierre: Date.now()+30
-        }]*/
-        
-        
-        var asignartarjeta = await usuario.save(); 
-        
-        
-        return asignartarjeta;
-        
-    } catch (e) {
-        throw Error("Error al encontrar al usuario")
-    }
-    /* if (!usuario) {
-        return false;
-    } */
-    
-    
-}
 
 //Agrego movimiento
 exports.agregarLiquidacion = async function (liquidacion) {    

@@ -28,8 +28,6 @@ exports.getLiquidaciones = async function (req, res, next) {
     var page = req.query.page ? req.query.page : 1
     var limit = req.query.limit ? req.query.limit : 1000;
 
-    console.log("aca", req.body.cuilUsuario);
-
     if(req.body.cuilUsuario){
       var filtro = {
 

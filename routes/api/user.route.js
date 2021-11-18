@@ -46,6 +46,7 @@ router.get('/getCobros', CobroController.getCobros)
 
 //Endpoint Pagos
 router.post('/agregarPago', PagoController.agregarPago)
-router.get('/getPagos', PagoController.getPagos)
+router.post('/getPagos', PagoController.getPagos)
+router.post('/UpdateidCobroPago', PagoController.UpdateidCobroPago)
 
 module.exports = router;
