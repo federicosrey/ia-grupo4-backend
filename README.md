@@ -25,7 +25,7 @@
 
 ## Tecnologia
 
-<img src="https://i.ibb.co/GR1VxFh/material-ui.png" width="64" height="64" /><img src="https://i.ibb.co/bsJMq4X/aps-504x498-small-transparent-pad-600x600-f8f8f8-u1.jpg" width="64" height="64" /><img src="https://i.ibb.co/8z4nT69/swagger-round.png" width="64" height="64" /><img src="https://i.ibb.co/gDdLc4Z/heroku.png" width="64" height="64" />
+<img src="https://i.ibb.co/GR1VxFh/material-ui.png" width="64" height="64" /><img src="https://i.ibb.co/bsJMq4X/aps-504x498-small-transparent-pad-600x600-f8f8f8-u1.jpg" width="64" height="64" /><img src="https://i.ibb.co/8z4nT69/swagger-round.png" width="64" height="64" /><img src="https://i.ibb.co/gDdLc4Z/heroku.png" width="64" height="64" /><img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/html-logo.jpg?raw=true" width="64" height="64" /><img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/react-logo.jpg?raw=true" width="64" height="64" />
 
 ## Instalacion
 
@@ -46,6 +46,12 @@
 * Luego dar <b>npm start</b>
 * Se levantará en local http://localhost:4000/
 * Tambien se encuentra hosteado en Heroku https://ia-grupo4-backend.herokuapp.com/
+
+## Navegadores soportados
+
+Se probo en los siguientes navegadores: 
+
+<img src="https://i.ibb.co/6v017Nk/pngegg.png">
 
 ## End-Points
 
