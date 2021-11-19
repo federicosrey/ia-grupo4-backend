@@ -51,7 +51,6 @@
 
 Se probo en los siguientes navegadores: 
 
-<img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/chrome-logo.png?raw=true" width="60" height="60"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/firefox-logo.png" width="60" height="60"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/opera-logo.png" width="60" height="60">
 <img src="https://i.ibb.co/6v017Nk/pngegg.png">
 
 ## End-Points
