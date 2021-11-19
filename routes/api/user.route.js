@@ -17,6 +17,8 @@ router.get('/tusuarios', UserController.getUsers)
 router.put('/actualizacion', UserController.updateUser)
 router.post('/usr', UserController.removeUser)
 router.post('/getInfoUsuario', UserController.getInfoUsuario)
+router.post('/updateTarjetaLiquidacion', UserController.updateTarjetaLiquidacion)
+router.post('/updatePass', UserController.updatePass)
 
 //Endpoint tarjetas
 router.post('/tarjeta', TarjetaController.agregarTarjeta)
@@ -39,6 +41,7 @@ router.post('/postLiquidaciones', LiquidacionController.postLiquidaciones)
 router.post('/getLiquidaciones', LiquidacionController.getLiquidaciones)
 router.post('/UpdateidCobroLiquidacion', LiquidacionController.UpdateidCobroLiquidacion)
 router.get('/getMontosaCobrarxConsumosClientestcb', LiquidacionController.getMontosaCobrarxConsumosClientes)
+router.post('/getULiquidaciones', LiquidacionController.getULiquidaciones)
 
 //Endpoint Cobros
 router.post('/agregarCobro', CobroController.agregarCobro)
@@ -48,5 +51,6 @@ router.get('/getCobros', CobroController.getCobros)
 router.post('/agregarPago', PagoController.agregarPago)
 router.post('/getPagos', PagoController.getPagos)
 router.post('/UpdateidCobroPago', PagoController.UpdateidCobroPago)
+router.post('/getNPagos', PagoController.getNPagos)
 
 module.exports = router;

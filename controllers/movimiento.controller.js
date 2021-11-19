@@ -50,6 +50,7 @@ exports.getUMovimientos = async function (req, res, next) {
     var filtro = {
 
         cuilUsuario: req.body.cuilUsuario,
+        idLiquidacion:"0"
     
     };
 
@@ -98,7 +99,7 @@ exports.getNMovimientos = async function (req, res, next) {
     var filtro = {
 
         cuitNegocio: req.body.cuitNegocio,
-    
+        idPago:"0"
     };
 
 

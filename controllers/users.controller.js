@@ -22,11 +22,12 @@ exports.createUser = async function (req, res, next) {
     var User = {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        //password: req.body.password,
         lastname: req.body.lastname,
         cuilcuit: req.body.cuilcuit,
         root: req.body.root,
-        nrotarjeta: req.body.nrotarjeta
+        nrotarjeta: req.body.nrotarjeta,
+        dni: req.body.dni
     }
     try {
         var createdUser = await UserService.createUser(User)
@@ -151,4 +152,37 @@ exports.getUserTarjetaFechaCierre = async function (req, res, next) {
 
         return res.status(400).json({ status: 400, message: e.message });
     }
+}
+
+exports.updateTarjetaLiquidacion = async function (req, res, next) {
+   
+    var usuario = {
+        cuilUsuario: req.body.cuilUsuario,
+        numeroTarjeta: req.body.numerotarjeta,
+    }
+    
+        var actualizandoInfo = await UserService.updateTarjetaLiquidacion(usuario)
+        
+        if(actualizandoInfo.status==201){
+          return res.status(201).json({ data: actualizandoInfo.data, status:actualizandoInfo.status, message: actualizandoInfo.message })
+        }else{
+          return res.status(400).json({ data: actualizandoInfo.data, status:actualizandoInfo.status, message: actualizandoInfo.message })
+        }  
+    
+}
+
+exports.updatePass = async function (req, res, next) {
+   
+    var dni = req.body.dni;
+    var pass = req.body.pass;
+        
+    
+        var actualizandoInfo = await UserService.updatePass(dni,pass)
+        
+        if(actualizandoInfo===true){
+          return res.status(201).json({ status:201, message: "Contraseña modificada exitosamente." })
+        }else{
+            return res.status(400).json({ status:400, message: "Ha ocurrido un error." })
+        }  
+    
 }

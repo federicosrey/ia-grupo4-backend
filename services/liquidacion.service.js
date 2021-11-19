@@ -99,3 +99,22 @@ exports.getMontosaCobrarxConsumosClientes = async function (query, page, limit) 
         throw Error('Error en el paginado de movimientos');
     }
 }
+
+exports.getULiquidaciones = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var liquidaciones = await Liquidacion.paginate(query,options)
+
+        return liquidaciones;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}

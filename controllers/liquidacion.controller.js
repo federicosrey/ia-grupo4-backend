@@ -16,7 +16,7 @@ exports.postLiquidaciones = async function (req, res, next) {
      try {
         var agregandoLiquidacion = await liquidacionService.agregarLiquidacion(liquidacion)
         console.log("cont ", agregandoLiquidacion)
-        return res.status(201).json({ data: agregandoLiquidacion, message: "Liquidación generada exitosamente" })
+        return res.status(201).json({ data: agregandoLiquidacion,status:201, message: "Liquidación generada exitosamente" })
     } catch (e) {
         console.log(e)
         return res.status(400).json({ status: 400, message: "liquidacion no pudo generarse" })
@@ -109,4 +109,51 @@ try {
 
   return res.status(400).json({ status: 400, message: e.message });
 }
+}
+
+exports.getULiquidaciones = async function (req, res, next) {
+
+  var page = req.query.page ? req.query.page : 1
+  var limit = req.query.limit ? req.query.limit : 1000;
+  
+  var filtro = {
+
+    cuilcuitUsuario: req.body.cuilUsuario,
+      
+  };
+
+
+  try {
+      var liquidaciones = await liquidacionService.getULiquidaciones(filtro, page, limit)
+      if (liquidaciones.cuilUsuario === 0)
+
+      return res.status(201).json({
+
+        status: 201,
+
+        data: liquidaciones,
+
+        message: "No existe la empresa por ID",
+
+      });
+
+    else
+
+      return res.status(200).json({
+
+        status: 200,
+
+        data: liquidaciones,
+
+        message: "Empresa por ID recuperada exitosamente",
+
+      });
+
+  } catch (e) {
+
+    console.log(e);
+
+    return res.status(400).json({ status: 400, message: e.message });
+
+  }
 }

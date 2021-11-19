@@ -1,6 +1,7 @@
 var User = require('../models/User.model');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+var moment = require('moment');
 
 _this = this
 
@@ -21,9 +22,11 @@ exports.getUsers = async function (query, page, limit) {
     }
 }
 
+
+
 // Creo usuarios
 exports.createUser = async function (user) {
-    var hashedPassword = bcrypt.hashSync(user.password, 8);
+    //var hashedPassword = bcrypt.hashSync(user.password, 8);
 
     var newUser = new User({
         name: user.name,
@@ -31,9 +34,10 @@ exports.createUser = async function (user) {
         email: user.email,
         cuilcuit: user.cuilcuit,
         root: user.root,
-        date: new Date(),
-        password: hashedPassword,
-        nrotarjeta: user.nrotarjeta
+        date:  moment().format('YYYY-MM-DD'),
+        password: "0",
+        nrotarjeta: user.nrotarjeta,
+        dni: user.dni,
 
     })
 
@@ -49,6 +53,37 @@ exports.createUser = async function (user) {
         console.log(e)
         throw Error("Error while Creating User")
     }
+}
+
+exports.updatePass = async function (userdni, pass) {    
+    
+        var hashedPassword = bcrypt.hashSync(pass, 8);    
+       
+        console.log(userdni,pass);
+        var user = await User.findOne({dni:userdni});
+        
+            console.log(user);
+            if(user != null){
+
+                if(user.password==="0"){
+                    user.password = hashedPassword;
+                            
+                    var actualizoInfo = await user.save(); 
+                    console.log(actualizoInfo)       
+                    return true;            
+                }
+                
+               
+                
+            }    
+        return false;
+        
+             
+              
+        
+        
+        
+ 
 }
 
 // Actualizo usuarios
@@ -138,4 +173,69 @@ exports.getInfoUsuario = async function (query, page, limit) {
         console.log("error servicio", e)
         throw Error('Error en el paginado de movimientos');
     }
+}
+
+exports.updateTarjetaLiquidacion = async function (usuario) {    
+    
+    var nuevoMovimiento = {
+        data: "",
+        status:400,
+        message: ""
+    }
+
+       
+        console.log("llego", usuario);
+        var user = await User.findOne({cuilcuit:usuario.cuilUsuario});
+        
+        
+            if(user != null){
+                
+                    var nt = 0;
+                    
+                    for (const t of user.tarjetas) {
+                        
+                        if (usuario.numeroTarjeta == t.numero){
+                            nt = 1;
+                            
+                            
+                            
+                            console.log(t.numero);                        
+
+                            //await user.t.push({
+                                t.fechaVencimiento= moment(t.fechaVencimiento).add(1, 'M').format('YYYY-MM-DD');
+                                t.fechaCierre= moment(t.fechaCierre).add(1, 'M').format('YYYY-MM-DD');
+                                t.acumulado = 0;
+                            //})
+                            
+                            var actualizoInfo = await user.save(); 
+                            
+                            //return actualizoInfo;
+                                    
+                            nuevoMovimiento.data = actualizoInfo;
+                            nuevoMovimiento.status = 201;
+                            nuevoMovimiento.message = "Actualizacion procesada correctamente";  
+                                
+                            
+                        }
+                    }
+                    
+                    if(nt==0){                        
+                        nuevoMovimiento.data = null;
+                        nuevoMovimiento.status = 400;
+                        nuevoMovimiento.message = "Número de tarjeta incorrecto";                         
+                    }
+                
+            }else{
+                nuevoMovimiento.data = null;
+                nuevoMovimiento.status = 400;
+                nuevoMovimiento.message = "Cliente inexistente";
+            }     
+        
+        
+             
+        return nuevoMovimiento;      
+        
+        
+        
+ 
 }

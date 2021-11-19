@@ -61,5 +61,23 @@ exports.UpdateidCobroPago = async function (idPago, idCobro) {
         throw Error('Error en el paginado de pagos');
     }
 }
+exports.getNPagos = async function (query, page, limit) {
+
+    var options = {
+        page,
+        limit
+    }
+    try {
+        //var movimientos = await Movimiento.find();
+        
+        var pagos = await Pago.paginate(query,options)
+
+        return pagos;
+
+    } catch (e) {
+        console.log("error servicio", e)
+        throw Error('Error en el paginado de movimientos');
+    }
+}
 
 
