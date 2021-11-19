@@ -11,11 +11,7 @@ var MovimientoSchema = new mongoose.Schema({
         type: Number
     },
     fecha: String,
-    cuilUsuario: {
-        type: String,
-        required: [true, 'CUIL requerido'],
-        minlength:[11,'El CUIL debe tener 11 caracteres']
-    },
+    cuilUsuario: String,
     cuitNegocio: String,
     numeroTarjeta: String, 
     monto: Number,
