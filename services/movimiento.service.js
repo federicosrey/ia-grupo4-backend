@@ -22,7 +22,7 @@ exports.agregarMovimiento = async function (movimiento) {
  
     //try {
        
-        if(movimiento.cuilUsuario.length==11){
+        if(movimiento.cuilUsuario.length>=9){
             var usuario = await User.findOne({cuilcuit:movimiento.cuilUsuario});
         }else{
             var usuario = await User.findOne({dni:movimiento.cuilUsuario});
